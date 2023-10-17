@@ -1,0 +1,26 @@
+﻿@using NonFactors.Mvc.Grid
+@model Sistema_Fallas_IMSS.ViewModels.VM_Index
+@(Html.Grid(Model.Reportes)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Id_reporte).Hidden();
+        columns.Add(model => model.Usuario).Titled("Usuario");
+        columns.Add(model => model.Nombre_area).Titled("Area");
+        columns.Add(model => model.Falla).Titled("Falla");
+        columns.Add(model => model.Descripcion).Titled("Descripcion");
+        columns.Add(model => model.Estatus).Titled("Estatus").Encoded(false).RenderedAs(model => model.Estatus == 1 ? "En proceso" : "Atendido");
+        columns.Add(model => model.Fecha_registro).Titled("Fecha Registro").Formatted("{0:d}");
+        columns.Add(model => model.Fecha_concluido).Titled("Fecha Concluido").Formatted("{0:d}");
+        columns.Add(model => model.Id_reporte).Titled("Finalizar").Encoded(false).Css("text-center").RenderedAs(model => $"<a href='#' onclick=''><span style='text-align:center'><i class='fa-regular fa-circle-check btn btn-success'></i></span></a>");
+        columns.Add(model => model.Id_reporte).Titled("Cancelar").Encoded(false).Css("text-center").RenderedAs(model => $"<a href='#' onclick=''><span style='text-align:center'><i class='fa-solid fa-circle-xmark btn btn-danger'></i></span></a>");
+        columns.Add(model => model.Id_reporte).Titled("Imprimir").Encoded(false).Css("text-center").RenderedAs(model => $"<a href='{Href($"~/Home/Imprimir?_id_reporte={model.Id_reporte}")}' target='_blank' onclick=''><span style='text-align:center'><i class='fa-regular fa-download btn btn-info'></i></span></a>");
+    })
+.Empty("Sin registros encontrados")
+.Named("gridReportes")
+.Id("gridReportes")
+.Css("table-condensed")
+.Pageable(pager =>
+{
+    pager.RowsPerPage = 10;
+})
+)
