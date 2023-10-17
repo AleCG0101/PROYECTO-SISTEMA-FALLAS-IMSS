@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -22,6 +23,7 @@ namespace Sistema_Fallas_IMSS.ViewModels
         public int Id_reporte { get; set; }
         public string Usuario { get; set; }
         public string Nombre_area { get; set; }
+        [Required]
         public string Descripcion { get; set; }
         public int Estatus { get; set; }
         public DateTime Fecha_registro { get; set; }

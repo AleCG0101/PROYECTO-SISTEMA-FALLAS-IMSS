@@ -15,8 +15,17 @@ namespace Sistema_Fallas_IMSS.Controllers
     public class HomeController : Controller
     {
         // GET: Home
-        public ActionResult Index(string usuario)
+        public ActionResult IndexUsuario()
         {
+            return RedirectToAction("Index");
+        }
+        public ActionResult IndexAdmin()
+        {
+            return RedirectToAction("Index");
+        }
+        public ActionResult Index()
+        {
+            string usuario = User.Identity.Name;
             using(var context = new IMSSEntities())
             {
                 if (usuario == null)

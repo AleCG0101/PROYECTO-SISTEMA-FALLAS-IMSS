@@ -2444,6 +2444,7 @@
     <Content Include="Content\Imagenes\IMSSBACKGROUND.png" />
     <Content Include="Content\Imagenes\LogoImss.png" />
     <Content Include="Content\MvcGrid\mvc-grid.css" />
+    <Content Include="Content\Plugins\sweetalert2.all.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
