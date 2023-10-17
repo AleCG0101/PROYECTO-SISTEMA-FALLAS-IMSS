@@ -8,6 +8,7 @@ using System.Web;
 using System.IO;
 using System.Web.Mvc;
 using Rotativa;
+using System.Runtime.Remoting;
 
 namespace Sistema_Fallas_IMSS.Controllers
 {
@@ -143,11 +144,52 @@ namespace Sistema_Fallas_IMSS.Controllers
                 }
             }
         }
+        [HttpPost]
+        public int FinalizarReporte(int _id_reporte)
+        {
+            try
+            {
+                using (var context = new IMSSEntities())
+                {
+                    var reporte = context.reporte.Find(_id_reporte);
+                    reporte.estatus = 2;
+                    context.SaveChanges();
+                    return 1;
+                }
+            }
+            catch (Exception)
+            {
+                return 0;
+                throw;
+            }
+            
+        }
+        [HttpPost]
+        public int CancelarReporte(int _id_reporte)
+        {
+            try
+            {
+                using (var context = new IMSSEntities())
+                {
+                    var reporte = context.reporte.Find(_id_reporte);
+                    reporte.estatus = 3;
+                    context.SaveChanges();
+                    return 1;
+                }
+            }
+            catch (Exception)
+            {
+                return 0;
+                throw;
+            }
+
+        }
         public ActionResult Reporte(int id_reporte)
         {
             VM_Reportes reporte = ObtenerReporte(id_reporte);
             reporte.Fecha = reporte.Fecha_registro.ToLongDateString();
             reporte.Contacto = String.IsNullOrEmpty(reporte.Contacto) ? "Sin contacto" : reporte.Contacto;
+            reporte.Estado = reporte.Estatus == 1 ? "En proceso" : reporte.Estatus == 2 ? "Atendido" : "Cancelado";
             return View("Documento",reporte);
         }
 

@@ -175,5 +175,88 @@
         });
     }
 
+    function FinalizarReporte(id_reporte) {
+        Swal.fire({
+            title: '¿Seguro que quieres Finalizar este reporte?',
+            text: "",
+            icon: "info",
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Sí',
+            denyButtonText: 'No, Salir',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Href("~/Home/FinalizarReporte")',
+                    data: JSON.stringify({ _id_reporte: id_reporte }),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (response) {
+
+                        if (response == 1) {
+                            Swal.fire(
+                                'Finalizado!',
+                                'El reporte ha sido finalizado!',
+                                'success'
+                            )
+                            var grid = new MvcGrid(document.querySelector(".mvc-grid"))
+                            grid.reload();
+
+                        }
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                });
+            }
+        })
+    }
+    function CancelarReporte(id_reporte) {
+        Swal.fire({
+            title: '¿Seguro que quieres Cancelar este reporte?',
+            text: "",
+            icon: "info",
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Sí',
+            denyButtonText: 'No, Salir',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Href("~/Home/CancelarReporte")',
+                    data: JSON.stringify({ _id_reporte: id_reporte }),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (response) {
+
+                        if (response == 1) {
+                            Swal.fire(
+                                'Cancelado!',
+                                'El reporte ha sido cancelado!',
+                                'success'
+                            )
+                            var grid = new MvcGrid(document.querySelector(".mvc-grid"))
+                            grid.reload();
+
+                        }
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                });
+            }
+        })
+    }
+
 </script>
 

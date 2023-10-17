@@ -44,11 +44,20 @@ namespace Sistema_Fallas_IMSS.Controllers
         {
             using(var context = new IMSSEntities())
             {
-                var usuario = context.usuarios.Where(u => u.cuenta == _usuario.Usuario && u.pass == _usuario.Password).FirstOrDefault();
+                string password = Encriptar(_usuario.Password);
+                var usuario = context.usuarios.Where(u => u.cuenta == _usuario.Usuario && u.pass == password).FirstOrDefault();
                 if (usuario != null)
                     return 1;
                 else return 0;
             }
+        }
+
+        public string Encriptar(string _password)
+        {
+            string result = string.Empty;
+            byte[] data = System.Text.Encoding.Unicode.GetBytes(_password);
+            result = Convert.ToBase64String(data);
+            return result;
         }
 
     }

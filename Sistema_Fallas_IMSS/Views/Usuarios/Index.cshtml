@@ -80,22 +80,26 @@
         var formData = new FormData();
         formData.append("Id", $("#mdlUsuario_hdf_id").val());
         formData.append("Nombre", $("#Nombre").val());
-        formData.append("Director", $("#Cuenta").val());
+        formData.append("Cuenta", $("#Cuenta").val());
         formData.append("Password", $("#Pass").val());
         formData.append("Rol", $("#Rol").val());
 
-         $.ajax({
+        $.ajax({
             type: "POST",
             url: '@Href("~/Usuarios/RegistrarEditarUsuario")',
             data: formData,
             contentType: false,
-            dataType: "json",
+            dataType: "html",
             cache: false,
             processData: false,
             success: function (response) {
 
-                if (response == 1) {
-                    $("#mdl_Hopsitales").modal('hide');
+                $("#mdl_Usuario").find(".modal-body").html(response);
+                $("#mdl_Usuario").modal('show');
+                var mensaje = $("#mdlUsuario_hdf_mensaje").val();
+
+                if (mensaje == "okay") {
+                    $("#mdl_Usuario").modal('hide');
                     var grid = new MvcGrid(document.querySelector(".mvc-grid"))
                     grid.reload();
                 }

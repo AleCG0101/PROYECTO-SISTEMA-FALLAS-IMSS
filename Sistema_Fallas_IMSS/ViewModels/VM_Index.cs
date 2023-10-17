@@ -33,5 +33,6 @@ namespace Sistema_Fallas_IMSS.ViewModels
         public string Falla { get; set; }
         public string Otra_falla { get; set; }
         public string Tipo { get; set; }
+        public string Estado { get; set; }
     }
 }

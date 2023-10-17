@@ -8,7 +8,6 @@
         columns.Add(model => model.Cuenta).Titled("Cuenta");
         columns.Add(model => model.Rol).Titled("Rol");
         columns.Add(model => model.Id).Titled("Editar").Encoded(false).Css("text-center").RenderedAs(model => $"<a href='#' onclick='AbrirModalUsuario({model.Id})' data-placement='left'><span style='text-align:center'><i class='fa-solid fa-pen-to-square btn btn-info'></i></span></a>");
-        columns.Add(model => model.Id).Titled("Eliminar").Encoded(false).Css("text-center").RenderedAs(model => $"<a href='#' onclick=''><span style='text-align:center'><i class='fa-solid fa-circle-xmark btn btn-danger'></i></span></a>");
     })
 .Empty("Sin registros encontrados")
 .Named("gridUsuarios")
