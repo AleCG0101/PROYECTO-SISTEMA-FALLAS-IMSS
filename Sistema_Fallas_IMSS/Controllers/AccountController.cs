@@ -11,7 +11,7 @@ namespace Sistema_Fallas_IMSS.Controllers
 {
     public class AccountController : Controller
     {
-        // GET: Login
+        // GET: Login 
         public ActionResult Login(VM_Login _usuario)
         {
             if (_usuario.Usuario == null) { return View("Login"); }
