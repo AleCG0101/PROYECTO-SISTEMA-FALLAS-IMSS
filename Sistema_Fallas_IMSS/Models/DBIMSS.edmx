@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DBIMSS.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="SISTEMA_FALLAS_IMSSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="areas_imss">
           <Key>
             <PropertyRef Name="Id_area" />
@@ -36,6 +36,16 @@
           <Property Name="Id_falla" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="descripcion" Type="varchar" MaxLength="100" />
           <Property Name="Id_tipo_falla" Type="int" />
+        </EntityType>
+        <EntityType Name="foro_soluciones">
+          <Key>
+            <PropertyRef Name="Id_solucion" />
+          </Key>
+          <Property Name="Id_solucion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="problema" Type="varchar(max)" />
+          <Property Name="solucion" Type="varchar(max)" />
+          <Property Name="autor" Type="varchar" MaxLength="100" />
+          <Property Name="correo" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="hospitales_imss">
           <Key>
@@ -257,10 +267,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="DBIMSSStoreContainer">
+        <EntityContainer Name="SISTEMA_FALLAS_IMSSModelStoreContainer">
           <EntitySet Name="areas_imss" EntityType="Self.areas_imss" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="existencias" EntityType="Self.existencias" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="fallas" EntityType="Self.fallas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="foro_soluciones" EntityType="Self.foro_soluciones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="hospitales_imss" EntityType="Self.hospitales_imss" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="material_estados" EntityType="Self.material_estados" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="materiales" EntityType="Self.materiales" Schema="dbo" store:Type="Tables" />
@@ -317,7 +328,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="DBIMSS" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="SISTEMA_FALLAS_IMSSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="areas_imss">
           <Key>
             <PropertyRef Name="Id_area" />
@@ -354,6 +365,16 @@
           <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Id_tipo_falla" Type="Int32" />
           <NavigationProperty Name="tipos_falla" Relationship="Self.FK__fallas__Id_tipo___6A30C649" FromRole="fallas" ToRole="tipos_falla" />
+        </EntityType>
+        <EntityType Name="foro_soluciones">
+          <Key>
+            <PropertyRef Name="Id_solucion" />
+          </Key>
+          <Property Name="Id_solucion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="problema" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="solucion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="autor" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="hospitales_imss">
           <Key>
@@ -594,6 +615,7 @@
           <EntitySet Name="areas_imss" EntityType="Self.areas_imss" />
           <EntitySet Name="existencias" EntityType="Self.existencias" />
           <EntitySet Name="fallas" EntityType="Self.fallas" />
+          <EntitySet Name="foro_soluciones" EntityType="Self.foro_soluciones" />
           <EntitySet Name="hospitales_imss" EntityType="Self.hospitales_imss" />
           <EntitySet Name="material_estados" EntityType="Self.material_estados" />
           <EntitySet Name="materiales" EntityType="Self.materiales" />
@@ -651,9 +673,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DBIMSSStoreContainer" CdmEntityContainer="IMSSEntities">
+        <EntityContainerMapping StorageEntityContainer="SISTEMA_FALLAS_IMSSModelStoreContainer" CdmEntityContainer="IMSSEntities">
           <EntitySetMapping Name="areas_imss">
-            <EntityTypeMapping TypeName="DBIMSS.areas_imss">
+            <EntityTypeMapping TypeName="SISTEMA_FALLAS_IMSSModel.areas_imss">
               <MappingFragment StoreEntitySet="areas_imss">
                 <ScalarProperty Name="Id_area" ColumnName="Id_area" />
                 <ScalarProperty Name="nombre_area" ColumnName="nombre_area" />
@@ -662,7 +684,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="existencias">
-            <EntityTypeMapping TypeName="DBIMSS.existencias">
+            <EntityTypeMapping TypeName="SISTEMA_FALLAS_IMSSModel.existencias">
               <MappingFragment StoreEntitySet="existencias">
                 <ScalarProperty Name="Id_existencia" ColumnName="Id_existencia" />
                 <ScalarProperty Name="id_material" ColumnName="id_material" />
@@ -679,7 +701,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="fallas">
-            <EntityTypeMapping TypeName="DBIMSS.fallas">
+            <EntityTypeMapping TypeName="SISTEMA_FALLAS_IMSSModel.fallas">
               <MappingFragment StoreEntitySet="fallas">
                 <ScalarProperty Name="Id_falla" ColumnName="Id_falla" />
                 <ScalarProperty Name="descripcion" ColumnName="descripcion" />
@@ -687,8 +709,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="foro_soluciones">
+            <EntityTypeMapping TypeName="SISTEMA_FALLAS_IMSSModel.foro_soluciones">
+              <MappingFragment StoreEntitySet="foro_soluciones">
+                <ScalarProperty Name="Id_solucion" ColumnName="Id_solucion" />
+                <ScalarProperty Name="problema" ColumnName="problema" />
+                <ScalarProperty Name="solucion" ColumnName="solucion" />
+                <ScalarProperty Name="autor" ColumnName="autor" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="hospitales_imss">
-            <EntityTypeMapping TypeName="DBIMSS.hospitales_imss">
+            <EntityTypeMapping TypeName="SISTEMA_FALLAS_IMSSModel.hospitales_imss">
               <MappingFragment StoreEntitySet="hospitales_imss">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
@@ -700,7 +733,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="material_estados">
-            <EntityTypeMapping TypeName="DBIMSS.material_estados">
+            <EntityTypeMapping TypeName="SISTEMA_FALLAS_IMSSModel.material_estados">
               <MappingFragment StoreEntitySet="material_estados">
                 <ScalarProperty Name="Id_estado" ColumnName="Id_estado" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
@@ -708,7 +741,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="materiales">
-            <EntityTypeMapping TypeName="DBIMSS.materiales">
+            <EntityTypeMapping TypeName="SISTEMA_FALLAS_IMSSModel.materiales">
               <MappingFragment StoreEntitySet="materiales">
                 <ScalarProperty Name="Id_material" ColumnName="Id_material" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
@@ -723,7 +756,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="operacion">
-            <EntityTypeMapping TypeName="DBIMSS.operacion">
+            <EntityTypeMapping TypeName="SISTEMA_FALLAS_IMSSModel.operacion">
               <MappingFragment StoreEntitySet="operacion">
                 <ScalarProperty Name="Id_operacion" ColumnName="Id_operacion" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
@@ -731,7 +764,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="reporte">
-            <EntityTypeMapping TypeName="DBIMSS.reporte">
+            <EntityTypeMapping TypeName="SISTEMA_FALLAS_IMSSModel.reporte">
               <MappingFragment StoreEntitySet="reporte">
                 <ScalarProperty Name="Id_reporte" ColumnName="Id_reporte" />
                 <ScalarProperty Name="ip_usuario" ColumnName="ip_usuario" />
@@ -744,7 +777,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="reporte_fallas">
-            <EntityTypeMapping TypeName="DBIMSS.reporte_fallas">
+            <EntityTypeMapping TypeName="SISTEMA_FALLAS_IMSSModel.reporte_fallas">
               <MappingFragment StoreEntitySet="reporte_fallas">
                 <ScalarProperty Name="Id_reporte_falla" ColumnName="Id_reporte_falla" />
                 <ScalarProperty Name="id_reporte" ColumnName="id_reporte" />
@@ -754,7 +787,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="rol_operacion">
-            <EntityTypeMapping TypeName="DBIMSS.rol_operacion">
+            <EntityTypeMapping TypeName="SISTEMA_FALLAS_IMSSModel.rol_operacion">
               <MappingFragment StoreEntitySet="rol_operacion">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Id_rol" ColumnName="Id_rol" />
@@ -763,7 +796,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="roles">
-            <EntityTypeMapping TypeName="DBIMSS.roles">
+            <EntityTypeMapping TypeName="SISTEMA_FALLAS_IMSSModel.roles">
               <MappingFragment StoreEntitySet="roles">
                 <ScalarProperty Name="Id_rol" ColumnName="Id_rol" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
@@ -771,7 +804,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tipo_hardware">
-            <EntityTypeMapping TypeName="DBIMSS.tipo_hardware">
+            <EntityTypeMapping TypeName="SISTEMA_FALLAS_IMSSModel.tipo_hardware">
               <MappingFragment StoreEntitySet="tipo_hardware">
                 <ScalarProperty Name="Id_tipo_hardware" ColumnName="Id_tipo_hardware" />
                 <ScalarProperty Name="tipo_producto" ColumnName="tipo_producto" />
@@ -779,7 +812,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tipos_falla">
-            <EntityTypeMapping TypeName="DBIMSS.tipos_falla">
+            <EntityTypeMapping TypeName="SISTEMA_FALLAS_IMSSModel.tipos_falla">
               <MappingFragment StoreEntitySet="tipos_falla">
                 <ScalarProperty Name="Id_tipo_falla" ColumnName="Id_tipo_falla" />
                 <ScalarProperty Name="descripcion" ColumnName="descripcion" />
@@ -787,7 +820,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="usuarios">
-            <EntityTypeMapping TypeName="DBIMSS.usuarios">
+            <EntityTypeMapping TypeName="SISTEMA_FALLAS_IMSSModel.usuarios">
               <MappingFragment StoreEntitySet="usuarios">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />

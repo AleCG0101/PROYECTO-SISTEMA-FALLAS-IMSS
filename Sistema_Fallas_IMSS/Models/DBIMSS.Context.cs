@@ -28,6 +28,7 @@ namespace Sistema_Fallas_IMSS.Models
         public virtual DbSet<areas_imss> areas_imss { get; set; }
         public virtual DbSet<existencias> existencias { get; set; }
         public virtual DbSet<fallas> fallas { get; set; }
+        public virtual DbSet<foro_soluciones> foro_soluciones { get; set; }
         public virtual DbSet<hospitales_imss> hospitales_imss { get; set; }
         public virtual DbSet<material_estados> material_estados { get; set; }
         public virtual DbSet<materiales> materiales { get; set; }
