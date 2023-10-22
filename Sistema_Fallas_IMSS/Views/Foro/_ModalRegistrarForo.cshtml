@@ -1,0 +1,32 @@
+﻿@model Sistema_Fallas_IMSS.ViewModels.VM_Foro
+@{
+    ViewBag.Title = "_ModalRegistrarForo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.HiddenFor(model => model.Id_foro)
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <label>Titulo:</label>
+            @Html.TextBoxFor(model => model.Titutlo, "", new { @class = "form-control" })
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <label>Problema:</label>
+            @Html.TextAreaFor(model => model.Problema, new { @class = "form-control", @rows = 5, @style = "resize: vertical;" })
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <label>Solucion:</label>
+            @Html.TextAreaFor(model => model.Solucion, new { @class = "form-control", @rows = 5, @style = "resize: vertical;" })
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <label>Autor:</label>
+            @Html.TextBoxFor(model => model.Autor, "", new { @class = "form-control" })
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <label>Correo:</label>
+            @Html.TextBoxFor(model => model.Correo, "", new { @class = "form-control" })
+        </div>
+    </div>
+</div>
+

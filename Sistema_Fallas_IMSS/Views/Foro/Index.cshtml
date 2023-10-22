@@ -54,4 +54,83 @@
         }
     </div>
 </div>
+<!--Modal para Crear Entradas al foro -->
+<div id="mdl_Foro" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Solucion al Foro</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <br />
+            <div class="modal-body">
 
+                <!-- PartialView _ModalRegistrarForo.cshtml -->
+
+            </div>
+            <!-- Modal footer -->
+            <div class=" modal-footer">
+                <button type="button" class="btn btn-success" onclick="RegistrarForo()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    function AbrirModalForo(id_foro) {
+        $.ajax({
+            type: "POST",
+            url: '@Href("~/Foro/AbrirModalForo")',
+            data: {id_foro: id_foro},
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+
+                $("#mdl_Foro").find(".modal-body").html(response);
+                $("#mdl_Foro").modal('show');
+            },
+            error: function () {
+            }
+        });
+    }
+
+    function RegistrarForo() {
+
+        var form = new FormData();
+        form.append("Id_foro", $("#Id_foro").val());
+        form.append("Titutlo", $("#Titutlo").val());
+        form.append("Problema", $("#Problema").val());
+        form.append("Solucion", $("#Solucion").val());
+        form.append("Autor", $("#Autor").val());
+        form.append("Correo", $("#Correo").val());
+
+        $.ajax({
+            type: "POST",
+            url: '@Href("~/Foro/GenerarRegistroForo")',
+            data: form,
+            contentType: false,
+            dataType: "json",
+            cache: false,
+            processData: false,
+            success: function (response) {
+
+                if (response == 1) {
+                    Swal.fire(
+                        'Creado!',
+                        'El reporte se ha creado!',
+                        'success'
+                    )
+                    $("#mdl_Reporte").modal('hide');
+
+                }
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            },
+        });
+    }
+
+</script>

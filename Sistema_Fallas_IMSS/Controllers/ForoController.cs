@@ -35,5 +35,10 @@ namespace Sistema_Fallas_IMSS.Controllers
                 return data;
             }
         }
+        [HttpPost]
+        public ActionResult AbrirModalForo(int id_foro)
+        {
+
+        }
     }
 }
