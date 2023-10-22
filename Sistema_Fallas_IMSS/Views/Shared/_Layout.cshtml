@@ -16,6 +16,7 @@
 
 
     <title>@ViewBag.Title - Sistema de Reportes de Fallas</title>
+
 </head>
 <body>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark" style="background-color: #13322B;">
@@ -27,16 +28,15 @@
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    @if (Sistema_Fallas_IMSS.Controllers.HomeController.ObtenerRol(User.Identity.Name) == 1)
+                    @if (Sistema_Fallas_IMSS.Controllers.HomeController.ObtenerRol(User.Identity.Name) <= 2)
                     {
                         <li>@Html.ActionLink("Hospitales", "Index", "Hospitales", new { usuario = User.Identity.Name }, new { @class = "nav-link" })</li>
                         <li>@Html.ActionLink("Materiales", "Index", "Materiales", new { usuario = User.Identity.Name }, new { @class = "nav-link" })</li>
                         <li>@Html.ActionLink("Usuarios", "Index", "Usuarios", new { usuario = User.Identity.Name }, new { @class = "nav-link" })</li>
-
                     }
+                    <li>@Html.ActionLink("Foro", "Index", "Foro", new { usuario = User.Identity.Name }, new { @class = "nav-link" })</li>
                 </ul>
-                <div class="nav-item ml-auto">@Html.ActionLink("Salir", "Logout", "Account", new { usuario = User.Identity.Name }, new { @class = "btn btn-danger" })</div>
-
+                <div class="nav-item ml-auto"><a href="@Url.Action("Logout", "Account")" class="btn btn-danger">Salir</a></div>
             </div>
         </div>
     </nav>

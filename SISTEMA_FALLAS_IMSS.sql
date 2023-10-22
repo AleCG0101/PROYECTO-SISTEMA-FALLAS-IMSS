@@ -158,7 +158,7 @@ ADD FOREIGN KEY(id_reporte) REFERENCES reporte(Id_reporte)
  INSERT INTO tipo_hardware VALUES('Computadora')
  INSERT materiales (nombre, marca, modelo,id_tipo_hardware, centro_costos, nombre_proyecto, id_estado, comentarios) VALUES (N'Computadora', N'Lenovo', N'M10', 1, N'Administracion', N'Administracion', 1, N'Ninguno')
 
- INSERT INTO roles VALUES ('Master')
+INSERT INTO roles VALUES ('Master')
 INSERT INTO roles VALUES ('Administrador')
 INSERT INTO roles VALUES ('Auxiliar')
 INSERT INTO roles VALUES ('Usuario')
@@ -203,3 +203,6 @@ INSERT INTO fallas(Id_tipo_falla, descripcion) VALUES
 (5,'Reemplazo de toner'),
 (5,'Hojas se quedan atoradas'),
 (5,'No puedo escanear')
+
+INSERT INTO foro_soluciones(titulo, problema, solucion, autor, correo) VALUES
+('Problema de prueba','Este es el problema de una entrada de prieba','El problema puede corresponder a su conexion a internet, no se estan introducioendo todos los datos necesarios o hay alguna falla interna, favor de acudir personalmente con el encargado del area de sistemas para identificar el caso especifico', 'Victor Manuel Lopez', 'victor.lopez@outlook.com')
