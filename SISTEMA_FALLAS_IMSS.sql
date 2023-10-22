@@ -77,13 +77,14 @@ Id_tipo_hardware INT IDENTITY(1,1) PRIMARY KEY,
 tipo_producto VARCHAR (100) NULL
 )
 
---CREATE TABLE FORO_SOLUCIONES(
---ID_SOLUCION INT IDENTITY(1,1) PRIMARY KEY,
---DESC_PROB VARCHAR(MAX) NULL,
---DESC_SOLU VARCHAR(MAX) NULL,
---AUTOR VARCHAR(100) NULL,
---CORREO VARCHAR(100) NULL,
---)
+CREATE TABLE foro_soluciones(
+Id_solucion INT IDENTITY(1,1) PRIMARY KEY,
+titulo VARCHAR(250) NULL,
+problema VARCHAR(MAX) NULL,
+solucion VARCHAR(MAX) NULL,
+autor VARCHAR(100) NULL,
+correo VARCHAR(100) NULL,
+)
 
 -----------------------------------------------------------------------------------
 CREATE TABLE reporte(

@@ -19,5 +19,6 @@ namespace Sistema_Fallas_IMSS.Models
         public string solucion { get; set; }
         public string autor { get; set; }
         public string correo { get; set; }
+        public string titulo { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="DBIMSS.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="SISTEMA_FALLAS_IMSSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="areas_imss">
     <Key>
       <PropertyRef Name="Id_area" />
@@ -31,6 +31,17 @@
     <Property Name="Id_falla" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="descripcion" Type="varchar" MaxLength="100" />
     <Property Name="Id_tipo_falla" Type="int" />
+  </EntityType>
+  <EntityType Name="foro_soluciones">
+    <Key>
+      <PropertyRef Name="Id_solucion" />
+    </Key>
+    <Property Name="Id_solucion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="problema" Type="varchar(max)" />
+    <Property Name="solucion" Type="varchar(max)" />
+    <Property Name="autor" Type="varchar" MaxLength="100" />
+    <Property Name="correo" Type="varchar" MaxLength="100" />
+    <Property Name="titulo" Type="varchar" MaxLength="250" Nullable="false" />
   </EntityType>
   <EntityType Name="hospitales_imss">
     <Key>
@@ -252,10 +263,11 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="DBIMSSStoreContainer">
+  <EntityContainer Name="SISTEMA_FALLAS_IMSSModelStoreContainer">
     <EntitySet Name="areas_imss" EntityType="Self.areas_imss" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="existencias" EntityType="Self.existencias" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="fallas" EntityType="Self.fallas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="foro_soluciones" EntityType="Self.foro_soluciones" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="hospitales_imss" EntityType="Self.hospitales_imss" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="material_estados" EntityType="Self.material_estados" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="materiales" EntityType="Self.materiales" Schema="dbo" store:Type="Tables" />
