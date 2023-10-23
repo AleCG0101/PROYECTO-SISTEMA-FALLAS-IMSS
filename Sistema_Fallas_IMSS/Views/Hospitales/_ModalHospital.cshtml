@@ -3,31 +3,37 @@
     Layout = null;
 }
 @Html.HiddenFor(model => model.Id)
+@Html.HiddenFor(model => model.Mensaje, new {@id = "mdlHospital_Mensaje"})
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12">
             <label>Nombre:</label>
-            @Html.TextBoxFor(model => model.Nombre, "", new {@class = "form-control"})
+            @Html.TextBoxFor(model => model.Nombre, "", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Nombre, null, new { @class = "text-danger" })
         </div>
     </div>
     <div class="row">
         <div class="col-sm-4 col-md-4 col-lg-4">
             <label>Director:</label>
             @Html.TextBoxFor(model => model.Director, "", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Director, null, new { @class = "text-danger" })
         </div>
         <div class="col-sm-8 col-md-8 col-lg-8">
             <label>Direccion:</label>
             @Html.TextBoxFor(model => model.Direccion, "", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Direccion, null, new { @class = "text-danger" })
         </div>
     </div>
     <div class="row">
         <div class="col-sm-6 col-md-6 col-lg-6">
             <label>Municipio:</label>
             @Html.TextBoxFor(model => model.Municipio, "", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Municipio, null, new { @class = "text-danger" })
         </div>
         <div class="col-sm-6 col-md-6 col-lg-6">
             <label>Estado:</label>
             @Html.TextBoxFor(model => model.Estado, "", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Estado, null, new { @class = "text-danger" })
         </div>
     </div>
 </div>

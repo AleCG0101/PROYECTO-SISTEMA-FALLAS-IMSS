@@ -8,13 +8,16 @@
         <div class="col-sm-12 col-md-12 col-lg-12">
             <label>Nombre:</label>
             @Html.TextBoxFor(model => model.Nombre_area, "", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Nombre_area, null, new { @class = "text-danger" })
+
         </div>
     </div>
     <br />
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12">
             <label>Hospital:</label>
-            @Html.DropDownListFor(model => model.Hospital, Model.Hospitales, "Seleccione Hospital" ,new {@class = "form-control"})
+            @Html.DropDownListFor(model => model.Hospital, Model.Hospitales, "Seleccione Hospital", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Hospital, null, new { @class = "text-danger" })
         </div>
     </div>      
 </div>

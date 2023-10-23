@@ -197,15 +197,29 @@
             url: '@Href("~/Hospitales/RegistrarEditarHospital")',
             data: formData,
             contentType: false,
-            dataType: "json",
+            dataType: "html",
             cache: false,
             processData: false,
             success: function (response) {
+                $("#mdl_Hopsitales").find(".modal-body").html(response);
+                var mensaje = $("#mdlHospital_Mensaje").val();
 
-                if (response == 1) {
+                if (mensaje == "okay") {
+                    Swal.fire(
+                        'Creado!',
+                        'Registro de hospital guardado!',
+                        'success'
+                    )
                     $("#mdl_Hopsitales").modal('hide');
                     var grid = new MvcGrid(document.querySelector(".mvc-grid"))
                     grid.reload();
+                }
+                if (mensaje == "error") {
+                    Swal.fire(
+                        'Algo ocurrio!',
+                        'Problemas al registrar el hospital!',
+                        'success'
+                    )
                 }
 
             },

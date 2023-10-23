@@ -116,8 +116,13 @@ namespace Sistema_Fallas_IMSS.Controllers
         }
 
         [HttpPost]
-        public int RegistrarEditarHospital(VM_Hospitales _hospital)
+        public PartialViewResult RegistrarEditarHospital(VM_Hospitales _hospital)
         {
+            if (!ModelState.IsValid)
+            {
+                _hospital.Mensaje = "validacion";
+                return PartialView("_ModalHospital", _hospital);
+            }
             using (var context = new IMSSEntities())
             {
                 try
@@ -145,11 +150,13 @@ namespace Sistema_Fallas_IMSS.Controllers
 
                     }
                     context.SaveChanges();
-                    return 1;
+                    _hospital.Mensaje = "okay";
+                    return PartialView("_ModalHospital", _hospital);
                 }
                 catch (Exception)
                 {
-                    return 0;
+                    _hospital.Mensaje = "error";
+                    return PartialView("_ModalHospital", _hospital);
                     throw;
                 }
                 

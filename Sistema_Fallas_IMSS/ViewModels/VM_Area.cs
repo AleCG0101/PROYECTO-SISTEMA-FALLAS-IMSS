@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -14,8 +15,10 @@ namespace Sistema_Fallas_IMSS.ViewModels
     public class VM_Areas
     {
         public int Id { get; set; }
+        [Required]
         public string Nombre_area { get; set; }
         public int Id_hospital { get; set; }
+        [Required]
         public string Hospital { get; set; }
         public List<SelectListItem> Hospitales { get; set; } = new List<SelectListItem>();
     }
