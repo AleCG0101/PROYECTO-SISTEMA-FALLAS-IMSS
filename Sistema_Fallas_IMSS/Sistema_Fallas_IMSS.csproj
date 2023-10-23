@@ -2585,6 +2585,7 @@
     <Content Include="Views\Usuarios\_ModalUsuario.cshtml" />
     <Content Include="Views\Foro\Index.cshtml" />
     <Content Include="Views\Foro\_ModalRegistrarForo.cshtml" />
+    <Content Include="Views\Foro\_PartialIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

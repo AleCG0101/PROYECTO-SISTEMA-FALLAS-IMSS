@@ -1,4 +1,4 @@
-﻿@model List<Sistema_Fallas_IMSS.ViewModels.VM_Foro>
+﻿
 @{
     ViewBag.Title = "Foro de Soluciones";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,46 +12,13 @@
         @if (Sistema_Fallas_IMSS.Controllers.HomeController.ObtenerRol(User.Identity.Name) <= 2)
         {
             <div class="col-sm-12 col-md-12 col-lg-12">
-                <button class="btn btn-primary">Agregar</button>
+                <button class="btn btn-primary" onclick="AbrirModalForo(0)">Agregar</button>
             </div>
         }
     </div>
     <br />
-    <div class="accordion" id="accordionExample">
-        @foreach (var item in Model)
-        {
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingdiv_@item.Id_foro">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#div_@item.Id_foro" aria-expanded="false" aria-controls="div_@item.Id_foro">
-                        @item.Titutlo
-                    </button>
-                </h2>
-                <div id="div_@item.Id_foro" class="accordion-collapse collapse" aria-labelledby="div_@item.Id_foro" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="col-sm-12 col-md-12 col-lg-12">
-                                    <strong>Problema:</strong>
-                                    <div>
-                                        @item.Problema
-                                    </div>
-                                </div>
-                                <hr />
-                                <div class="col-sm-12 col-md-12 col-lg-12">
-                                    <strong>Solucion:</strong>
-                                    <div>
-                                        @item.Solucion
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-footer text-muted">
-                                <strong>Autor: </strong>@item.Autor  <div><strong>Correo: </strong>@item.Correo</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
+    <div id="div_partialindex">
+
     </div>
 </div>
 <!--Modal para Crear Entradas al foro -->
@@ -77,11 +44,31 @@
 </div>
 <script type="text/javascript">
 
+    window.onload = (event) => {
+
+        CargarIndex();
+    }
+
+    function CargarIndex() {
+         $.ajax({
+            type: "GET",
+            url: '@Href("~/Foro/PartialIndex")',
+            data: null,
+            dataType: "html",
+            success: function (response) {
+
+                $("#div_partialindex").html(response);
+            },
+            error: function () {
+            }
+        });
+    }
+
     function AbrirModalForo(id_foro) {
         $.ajax({
             type: "POST",
             url: '@Href("~/Foro/AbrirModalForo")',
-            data: {id_foro: id_foro},
+            data: JSON.stringify({id_foro: id_foro}),
             dataType: "html",
             contentType: "application/json; charset=utf-8",
             success: function (response) {
@@ -109,28 +96,41 @@
             url: '@Href("~/Foro/GenerarRegistroForo")',
             data: form,
             contentType: false,
-            dataType: "json",
+            dataType: "html",
             cache: false,
             processData: false,
             success: function (response) {
 
-                if (response == 1) {
+                $("#mdl_Foro").find(".modal-body").html(response);
+
+                var mensaje = $("#Mensaje").val();
+
+                if (mensaje == "okay") {
+
                     Swal.fire(
                         'Creado!',
-                        'El reporte se ha creado!',
+                        'Se ha crado una nueva entrada en el foro!',
                         'success'
                     )
-                    $("#mdl_Reporte").modal('hide');
-
+                    $("#mdl_Foro").modal('hide');
+                    CargarIndex();
+                }
+                if (mensaje == "error") {
+                    Swal.fire(
+                        'Algo sucedio!',
+                        'Sucedio un error al crear el registro, intenta de nuevo!',
+                        'info'
+                    )
                 }
             },
             failure: function (response) {
-                alert(response.responseText);
+
             },
             error: function (response) {
-                alert(response.responseText);
+
             },
         });
     }
+
 
 </script>
