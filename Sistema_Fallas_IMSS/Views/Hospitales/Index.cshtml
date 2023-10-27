@@ -218,7 +218,7 @@
                     Swal.fire(
                         'Algo ocurrio!',
                         'Problemas al registrar el hospital!',
-                        'success'
+                        'info'
                     )
                 }
 
@@ -246,18 +246,32 @@
             url: '@Href("~/Hospitales/RegistrarEditarArea")',
             data: formData,
             contentType: false,
-            dataType: "json",
+            dataType: "html",
             cache: false,
             processData: false,
             success: function (response) {
 
-                if (response == 1) {
-                    $("#mdl_Areas").modal('hide');
+                $("#mdl_Areas").find(".modal-body").html(response);
+                var mensaje = $("#mdlArea_mensaje").val();
 
+                if (mensaje == "okay") {
+                    Swal.fire(
+                        'Creado!',
+                        'Registro de area guardado!',
+                        'success'
+                    )
+                    $("#mdl_Areas").modal('hide');
                     var grid = new MvcGrid(document.querySelector("#gridAreas"))
                     grid.reload();
                     var grid2 = new MvcGrid(document.querySelector("#gridHospitales"))
                     grid2.reload();
+                }
+                if (mensaje == "error") {
+                    Swal.fire(
+                        'Algo ocurrio!',
+                        'Problemas al registrar el area!',
+                        'info'
+                    )
                 }
 
             },

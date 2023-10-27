@@ -92,6 +92,7 @@ namespace Sistema_Fallas_IMSS.Controllers
                             foro.solucion = _data.Solucion;
                             foro.autor = _data.Autor;
                             foro.correo = _data.Correo;
+                            context.SaveChanges();
                         }
                         else
                         {

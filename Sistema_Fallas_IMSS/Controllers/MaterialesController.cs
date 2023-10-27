@@ -193,12 +193,27 @@ namespace Sistema_Fallas_IMSS.Controllers
             }
         }
         [HttpPost]
-        public int RegistrarEditarExistencia(VM_Existencias _existencia)
+        public ActionResult RegistrarEditarExistencia(VM_Existencias _existencia)
         {
             using (var context = new IMSSEntities())
             {
                 using(var transaction = context.Database.BeginTransaction())
                 {
+                    _existencia.Materiales = context.materiales.Select(model => new SelectListItem
+                    {
+                        Value = model.Id_material.ToString(),
+                        Text = model.nombre + " " + model.marca + " " + model.modelo,
+                    }).ToList();
+                    _existencia.Areas = context.areas_imss.Select(model => new SelectListItem
+                    {
+                        Value = model.Id_area.ToString(),
+                        Text = model.nombre_area,
+                    }).ToList();
+                    if (!ModelState.IsValid)
+                    {
+                        _existencia.Mensaje = "validacion";
+                        return PartialView("_ModalExistencia",_existencia);
+                    }
                     try
                     {
 
@@ -237,23 +252,42 @@ namespace Sistema_Fallas_IMSS.Controllers
 
                         context.SaveChanges();
                         transaction.Commit();
-                        return 1;
+                        _existencia.Mensaje = "okay";
+                        return PartialView("_ModalExistencia", _existencia);
                     }
                     catch (Exception)
                     {
 
                         transaction.Rollback();
-                        return 0;
+                        _existencia.Mensaje = "error";
+                        return PartialView("_ModalExistencia", _existencia);
                     }
                 }
             }
         }
 
         [HttpPost]
-        public int RegistrarEditarMaterial(VM_MaterialesCatalogo _material)
+        public ActionResult RegistrarEditarMaterial(VM_MaterialesCatalogo _material)
         {
             using(var context = new IMSSEntities())
             {
+                _material.Tipos = (from tipos in context.tipo_hardware
+                              select new SelectListItem
+                              {
+                                  Value = tipos.Id_tipo_hardware.ToString(),
+                                  Text = tipos.tipo_producto,
+                              }).ToList();
+                _material.Estados = (from estados in context.material_estados
+                                select new SelectListItem
+                                {
+                                    Value = estados.Id_estado.ToString(),
+                                    Text = estados.nombre,
+                                }).ToList();
+                if (!ModelState.IsValid)
+                {
+                    _material.Mensaje = "validacion";
+                    return PartialView("_ModalMaterial", _material);
+                }
                 try
                 {
                     if (_material.Id_material > 0)
@@ -285,21 +319,27 @@ namespace Sistema_Fallas_IMSS.Controllers
                         context.materiales.Add(nuevo_material);
                     }
                     context.SaveChanges();
-                    return 1;
+                    _material.Mensaje = "okay";
+                    return PartialView("_ModalMaterial", _material);
                 }
                 catch (Exception)
                 {
-                    return 0;
-                    throw;
+                    _material.Mensaje = "error";
+                    return PartialView("_ModalMaterial", _material);
                 }
             }
         }
 
         [HttpPost]
-        public int RegistrarEditarTipo(VM_TipoHardware _tipo)
+        public ActionResult RegistrarEditarTipo(VM_TipoHardware _tipo)
         {
             using (var context = new IMSSEntities())
             {
+                if (!ModelState.IsValid)
+                {
+                    _tipo.Mensaje = "validacion";
+                    return PartialView("_ModalTipo", _tipo);
+                }
                 try
                 {
                     if (_tipo.Id_tipo_hardware > 0)
@@ -309,19 +349,20 @@ namespace Sistema_Fallas_IMSS.Controllers
                     }
                     else
                     {
-                        tipo_hardware nievo_tipo = new tipo_hardware
+                        tipo_hardware nuevo_tipo = new tipo_hardware
                         {
                             tipo_producto = _tipo.Tipo_producto,
                         };
-                        context.tipo_hardware.Add(nievo_tipo);
+                        context.tipo_hardware.Add(nuevo_tipo);
                     }
                     context.SaveChanges();
-                    return 1;
+                    _tipo.Mensaje = "okay";
+                    return PartialView("_ModalTipo", _tipo);
                 }
                 catch (Exception)
                 {
-                    return 0;
-                    throw;
+                    _tipo.Mensaje = "error";
+                    return PartialView("_ModalTipo", _tipo);
                 }
             }
         }

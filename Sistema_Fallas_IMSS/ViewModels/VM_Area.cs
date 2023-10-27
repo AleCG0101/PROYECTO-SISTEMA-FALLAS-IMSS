@@ -15,12 +15,13 @@ namespace Sistema_Fallas_IMSS.ViewModels
     public class VM_Areas
     {
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Introduce un nombre")]
         public string Nombre_area { get; set; }
         public int Id_hospital { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Selecciona un hospital")]
         public string Hospital { get; set; }
         public List<SelectListItem> Hospitales { get; set; } = new List<SelectListItem>();
+        public string Mensaje { get; set; }
     }
 
 }

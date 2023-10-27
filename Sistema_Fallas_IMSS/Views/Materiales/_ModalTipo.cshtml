@@ -3,11 +3,13 @@
     Layout = null;
 }
 @Html.HiddenFor(model => model.Id_tipo_hardware)
+@Html.HiddenFor(model => model.Mensaje, new {@id = "mdlTipo_mensaje"})
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12">
             <label>Tipo de Hardware:</label>
             @Html.TextBoxFor(model => model.Tipo_producto, "", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Tipo_producto, null, new { @class = "text-danger" })
         </div>
     </div>
 </div>

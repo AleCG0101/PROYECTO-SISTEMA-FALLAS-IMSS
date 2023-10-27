@@ -3,17 +3,20 @@
     Layout = null;
 }
 @Html.HiddenFor(model => model.Id_material)
+@Html.HiddenFor(model => model.Mensaje, new {@id = "mdlMaterial_mensaje"})
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12">
             <label>Nombre:</label>
             @Html.TextBoxFor(model => model.Nombre, "", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Nombre, null, new { @class = "text-danger" })
         </div>
     </div>
     <div class="row">
         <div class="col-sm-6 col-md-6 col-lg-6">
             <label>Marca:</label>
             @Html.TextBoxFor(model => model.Marca, "", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Marca, null, new { @class = "text-danger" })
         </div>
         <div class="col-sm-6 col-md-6 col-lg-6">
             <label>Modelo:</label>
@@ -24,6 +27,7 @@
         <div class="col-sm-6 col-md-6 col-lg-6">
             <label>Centro de costos:</label>
             @Html.TextBoxFor(model => model.Centro_costos, "", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Centro_costos, null, new { @class = "text-danger" })
         </div>
         <div class="col-sm-6 col-md-6 col-lg-6">
             <label>Proyecto:</label>
@@ -33,11 +37,13 @@
     <div class="row">
         <div class="col-sm-6 col-md-6 col-lg-6">
             <label>Tipo de Hardware:</label>
-            @Html.DropDownListFor(model => model.Tipo_hardware, Model.Tipos, "Seleccione un tipo", new {@class = "form-control"})
+            @Html.DropDownListFor(model => model.Tipo_hardware, Model.Tipos, "Seleccione un tipo", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Tipo_hardware, null, new { @class = "text-danger" })
         </div>
         <div class="col-sm-6 col-md-6 col-lg-6">
             <label>Estado:</label>
             @Html.DropDownListFor(model => model.Estado, Model.Estados, "Seleccione un estado", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Estado, null, new { @class = "text-danger" })
         </div>
     </div>
     <br />
@@ -45,6 +51,7 @@
         <label>Comentarios:</label>
         <div class="col-sm-12 col-md-12 col-lg-12">
             @Html.TextAreaFor(model => model.Comentarios, new { @class = "form-control", @rows = 5 })
+            @Html.ValidationMessageFor(model => model.Comentarios, null, new { @class = "text-danger" })
         </div>
     </div>
 </div>

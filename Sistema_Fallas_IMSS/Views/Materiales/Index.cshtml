@@ -248,15 +248,30 @@
             url: '@Href("~/Materiales/RegistrarEditarMaterial")',
             data: formData,
             contentType: false,
-            dataType: "json",
+            dataType: "html",
             cache: false,
             processData: false,
             success: function (response) {
 
-                if (response == 1) {
+                $("#mdl_Materiales").find(".modal-body").html(response);
+                var mensaje = $("#mdlMaterial_mensaje").val();
+
+                if (mensaje == "okay") {
+                    Swal.fire(
+                        'Creado!',
+                        'Se ha registrado el material!',
+                        'success'
+                    )
                     $("#mdl_Materiales").modal('hide');
                     var grid = new MvcGrid(document.querySelector("#gridMateriales"))
                     grid.reload();
+                }
+                if (mensaje == "error") {
+                    Swal.fire(
+                        'Algo ocurrio!',
+                        'Problemas al registrar el material!',
+                        'info'
+                    )
                 }
 
             },
@@ -296,15 +311,30 @@
             url: '@Href("~/Materiales/RegistrarEditarExistencia")',
             data: formData,
             contentType: false,
-            dataType: "json",
+            dataType: "html",
             cache: false,
             processData: false,
             success: function (response) {
 
-                if (response == 1) {
+                $("#mdl_Existencia").find(".modal-body").html(response);
+                var mensaje = $("#mdlExistencia_mensaje").val();
+
+                if (mensaje == "okay") {
+                    Swal.fire(
+                        'Creado!',
+                        'Se ha registrado la existencia!',
+                        'success'
+                    )
                     $("#mdl_Existencia").modal('hide');
                     var grid = new MvcGrid(document.querySelector("#gridExistencias"))
                     grid.reload();
+                }
+                if (mensaje == "error") {
+                    Swal.fire(
+                        'Algo ocurrio!',
+                        'Problemas al registrar la existencia!',
+                        'info'
+                    )
                 }
 
             },
@@ -328,15 +358,30 @@
             url: '@Href("~/Materiales/RegistrarEditarTipo")',
             data: formData,
             contentType: false,
-            dataType: "json",
+            dataType: "html",
             cache: false,
             processData: false,
             success: function (response) {
 
-                if (response == 1) {
+                $("#mdl_Tipo").find(".modal-body").html(response);
+                var mensaje = $("#mdlTipo_mensaje").val();
+
+                if (mensaje == "okay") {
+                    Swal.fire(
+                        'Creado!',
+                        'Se ha registrado la existencia!',
+                        'success'
+                    )
                     $("#mdl_Tipo").modal('hide');
                     var grid = new MvcGrid(document.querySelector("#gridTipos"))
                     grid.reload();
+                }
+                if (mensaje == "error") {
+                    Swal.fire(
+                        'Algo ocurrio!',
+                        'Problemas al registrar la existencia!',
+                        'info'
+                    )
                 }
 
             },

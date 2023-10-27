@@ -165,10 +165,21 @@ namespace Sistema_Fallas_IMSS.Controllers
         }
 
         [HttpPost]
-        public int RegistrarEditarArea(VM_Areas _area)
+        public ActionResult RegistrarEditarArea(VM_Areas _area)
         {
             using(var context = new IMSSEntities())
             {
+                _area.Hospitales = (from hospitales in context.hospitales_imss
+                                   select new SelectListItem
+                                   {
+                                       Value = hospitales.Id.ToString(),
+                                       Text = hospitales.nombre,
+                                   }).ToList();
+                if (!ModelState.IsValid)
+                {
+                    _area.Mensaje = "validacion";
+                    return PartialView("_ModalAreas", _area);
+                }
                 try
                 {
                     if (_area.Id > 0)
@@ -188,12 +199,13 @@ namespace Sistema_Fallas_IMSS.Controllers
                         context.areas_imss.Add(area);
                     }
                     context.SaveChanges();
-                    return 1;
+                    _area.Mensaje = "okay";
+                    return PartialView("_ModalAreas", _area);
                 }
                 catch (Exception)
                 {
-                    return 0;
-                    throw;
+                    _area.Mensaje = "error";
+                    return PartialView("_ModalAreas", _area);
                 }
             }
         }

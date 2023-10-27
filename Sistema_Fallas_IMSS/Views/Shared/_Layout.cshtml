@@ -34,7 +34,10 @@
                         <li>@Html.ActionLink("Materiales", "Index", "Materiales", new { usuario = User.Identity.Name }, new { @class = "nav-link" })</li>
                         <li>@Html.ActionLink("Usuarios", "Index", "Usuarios", new { usuario = User.Identity.Name }, new { @class = "nav-link" })</li>
                     }
-                    <li>@Html.ActionLink("Foro", "Index", "Foro", new { usuario = User.Identity.Name }, new { @class = "nav-link" })</li>
+                    @if (Sistema_Fallas_IMSS.Controllers.HomeController.ObtenerRol(User.Identity.Name) <= 3)
+                    {
+                        <li>@Html.ActionLink("Foro", "Index", "Foro", new { usuario = User.Identity.Name }, new { @class = "nav-link" })</li>
+                    }
                 </ul>
                 <div class="nav-item ml-auto"><a href="@Url.Action("Logout", "Account")" class="btn btn-danger">Salir</a></div>
             </div>

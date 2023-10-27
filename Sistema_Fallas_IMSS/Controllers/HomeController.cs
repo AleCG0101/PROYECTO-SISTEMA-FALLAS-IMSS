@@ -162,6 +162,7 @@ namespace Sistema_Fallas_IMSS.Controllers
                 {
                     var reporte = context.reporte.Find(_id_reporte);
                     reporte.estatus = 2;
+                    reporte.fecha_concluido = DateTime.Now;
                     context.SaveChanges();
                     return 1;
                 }
@@ -206,6 +207,35 @@ namespace Sistema_Fallas_IMSS.Controllers
         {           
             return new ActionAsPdf("Reporte", new { id_reporte = _id_reporte });
         }
+
+        public ActionResult AbrirModalFallas()
+        {
+            using (var context = new IMSSEntities())
+            {
+                var tipo_fallas = context.tipos_falla.Select(m => new { m.Id_tipo_falla, m.descripcion }).ToList();
+                List<VM_TipoFallas> data = new List<VM_TipoFallas>();
+                foreach (var item in tipo_fallas)
+                {
+                    VM_TipoFallas falla = new VM_TipoFallas { 
+                        Id_tipo = item.Id_tipo_falla,
+                        Tipo_falla = item.descripcion,
+                    }; 
+                    falla.Fallas = (from fallas in context.fallas
+                                           join tipos in context.tipos_falla on fallas.Id_tipo_falla equals tipos.Id_tipo_falla
+                                           where tipos.Id_tipo_falla == item.Id_tipo_falla
+                                           select new VM_Fallas
+                                           {
+                                               Id = fallas.Id_falla,
+                                               Descripcion = fallas.descripcion,
+                                               Id_Tipo = tipos.Id_tipo_falla,
+
+                                           }).ToList();
+                    data.Add(falla);
+                }
+                return PartialView("_ModalTipoFallas",data);
+            }
+        }
+
         private VM_Reportes ObtenerReporte(int _id_reporte)
         {
             using (var context = new IMSSEntities())
