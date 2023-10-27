@@ -1,0 +1,28 @@
+﻿@model Sistema_Fallas_IMSS.ViewModels.VM_Fallas
+@{
+    ViewBag.Title = "_ModalFallas";
+    Layout = null;
+}
+@Html.HiddenFor(model => model.Id)
+@Html.HiddenFor(model => model.Mensaje, new { @id = "mdlFalla_mensaje" })
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <label>Tipo de Falla:</label>
+            @Html.DropDownListFor(model => model.Ddl_tipo, Model.Tipos, "Seleccione un tipo", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Ddl_tipo, null, new { @class = "text-danger" })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <label>Falla:</label>
+            @Html.TextBoxFor(model => model.Descripcion, "", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Descripcion, null, new { @class = "text-danger" })
+
+        </div>
+    </div>
+
+</div>
+
+

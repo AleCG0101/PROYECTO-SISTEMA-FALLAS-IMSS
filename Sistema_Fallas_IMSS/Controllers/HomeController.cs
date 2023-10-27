@@ -236,6 +236,122 @@ namespace Sistema_Fallas_IMSS.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult ModalTipo(int _id_tipo)
+        {
+            VM_TipoFallas data = new VM_TipoFallas();
+            if (_id_tipo == 0)
+            {
+                return PartialView("_ModalTipo", data);
+            }
+            else
+            {
+                using (var context = new IMSSEntities())
+                {
+                    var tipo = context.tipos_falla.Find(_id_tipo);
+                    data.Id_tipo = tipo.Id_tipo_falla;
+                    data.Tipo_falla = tipo.descripcion;
+                    return PartialView("_ModalTipo", data);
+                }
+            }
+            
+        }
+        [HttpPost]
+        public ActionResult ModalFalla(int _id_falla, int _id_tipo)
+        {
+            VM_Fallas data = new VM_Fallas();
+
+            using (var context = new IMSSEntities())
+            {
+                data.Tipos = context.tipos_falla.Select(x => new SelectListItem
+                {
+                    Value = x.Id_tipo_falla.ToString(),
+                    Text = x.descripcion,
+                }).ToList();
+                data.Ddl_tipo = _id_tipo.ToString();
+
+                if (_id_falla == 0)
+                {
+                    return PartialView("_ModalFallas", data);
+                }
+                var falla = context.fallas.Find(_id_falla);
+
+                data.Id = falla.Id_falla;
+                data.Ddl_tipo = falla.Id_tipo_falla.ToString();
+                data.Descripcion = falla.descripcion;
+                return PartialView("_ModalFallas", data);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult RegistrarEditarTipo(VM_TipoFallas _tipo)
+        {
+            try
+            {
+                using (var context = new IMSSEntities())
+                {
+                    if (_tipo.Id_tipo > 0)
+                    {
+                        var tipo = context.tipos_falla.Find(_tipo.Id_tipo);
+                        tipo.descripcion = _tipo.Tipo_falla;
+
+                    }
+                    else
+                    {
+                        tipos_falla nuevoTipo = new tipos_falla
+                        {
+                            descripcion = _tipo.Tipo_falla,
+                        };
+                        context.tipos_falla.Add(nuevoTipo);
+
+                    }
+                    context.SaveChanges();
+                    _tipo.Mensaje = "okay";
+                    return PartialView("_ModalTipo", _tipo);
+                }
+            }
+            catch (Exception)
+            {
+                _tipo.Mensaje = "error";
+                return PartialView("_ModalTipo", _tipo);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult RegistrarEditarFalla(VM_Fallas _falla)
+        {
+            try
+            {
+                using (var context = new IMSSEntities())
+                {
+                    if (_falla.Id > 0)
+                    {
+                        var falla = context.tipos_falla.Find(_falla.Id);
+                        falla.descripcion = _falla.Descripcion;
+                        falla.Id_tipo_falla = Convert.ToInt32(_falla.Ddl_tipo);
+                    }
+                    else
+                    {
+                        fallas nuevaFalla = new fallas
+                        {
+                            descripcion = _falla.Descripcion,
+                            Id_tipo_falla = Convert.ToInt32(_falla.Ddl_tipo),
+                    };
+                        context.fallas.Add(nuevaFalla);
+
+                    }
+                    context.SaveChanges();
+                    _falla.Mensaje = "okay";
+                    return PartialView("_ModalFallas", _falla);
+                }
+            }
+            catch (Exception)
+            {
+                _falla.Mensaje = "error";
+                return PartialView("_ModalFallas", _falla);
+            }
+        }
+
         private VM_Reportes ObtenerReporte(int _id_reporte)
         {
             using (var context = new IMSSEntities())

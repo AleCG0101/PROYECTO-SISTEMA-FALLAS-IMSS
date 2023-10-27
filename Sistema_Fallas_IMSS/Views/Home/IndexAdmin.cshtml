@@ -79,11 +79,51 @@
             </div>
             <div class="modal-body">
 
-                <!-- PartialView _ModalTipoFallas.cshtml -->
+                <!-- PartialView _ModalTiposFallas.cshtml -->
 
             </div>
             <!-- Modal footer -->
             <div class=" modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal para Agregar o Editar Tipos de Fallas-->
+<div id="mdl_editarAgregarTipo" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Registro de Fallas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <!-- PartialView _ModalTipo.cshtml -->
+
+            </div>
+            <!-- Modal footer -->
+            <div class=" modal-footer">
+                <button type="button" class="btn btn-success" onclick="RegistrarEditarTipo()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal para Agregar o Editar Fallas-->
+<div id="mdl_editarAgregarFallas" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Registro de Fallas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <!-- PartialView _ModalFallas.cshtml -->
+
+            </div>
+            <!-- Modal footer -->
+            <div class=" modal-footer">
+                <button type="button" class="btn btn-success" onclick="RegistrarEditarFalla()">Guardar</button>
             </div>
         </div>
     </div>
@@ -258,6 +298,7 @@
             }
         })
     }
+
     function CancelarReporte(id_reporte) {
         Swal.fire({
             title: '¿Seguro que quieres Cancelar este reporte?',
@@ -298,6 +339,119 @@
                 });
             }
         })
+    }
+
+    function AbrirModalFalla(id_falla, id_tipo) {
+        $.ajax({
+            type: "POST",
+            url: '@Href("~/Home/ModalFalla")',
+            data: JSON.stringify({ _id_falla: id_falla, _id_tipo: id_tipo }),
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+
+                $("#mdl_editarAgregarFallas").find(".modal-body").html(response);
+                $("#mdl_editarAgregarFallas").modal('show');
+            },
+            error: function () {
+            }
+        });
+    }
+
+    function AbrirModalTipo(id_tipo) {
+        $.ajax({
+            type: "POST",
+            url: '@Href("~/Home/ModalTipo")',
+            data: JSON.stringify({ _id_tipo: id_tipo }),
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+
+                $("#mdl_editarAgregarTipo").find(".modal-body").html(response);
+                $("#mdl_editarAgregarTipo").modal('show');
+            },
+            error: function () {
+            }
+        });
+    }
+
+    function RegistrarEditarTipo() {
+        var formData = new FormData();
+        formData.append("Id_tipo", $("#Id_tipo").val());
+        formData.append("Tipo_falla", $("#Tipo_falla").val());
+
+        $.ajax({
+            type: "POST",
+            url: '@Href("~/Home/RegistrarEditarTipo")',
+            data: formData,
+            contentType: false,
+            dataType: "html",
+            cache: false,
+            processData: false,
+            success: function (response) {
+
+                $("#mdl_editarAgregarTipo").find(".modal-body").html(response);
+                var mensaje = $("#mdlTipo_mensaje").val();
+                if (mensaje == "okay") {
+                    Swal.fire(
+                        'Completado!',
+                        'Tipo de Falla guardado!',
+                        'success'
+                    )
+                    $("#mdl_editarAgregarTipo").modal('hide');
+                    AbrirModalFallas();
+                }
+                if (mensaje == "error") {
+                    Swal.fire(
+                        'Algo sucedio!',
+                        'Error al guardar!',
+                        'info'
+                    )
+                }
+            },
+            error: function () {
+            }
+        });
+    }
+
+     function RegistrarEditarFalla() {
+        var formData = new FormData();
+         formData.append("Id", $("#Id").val());
+         formData.append("Ddl_tipo", $("#Ddl_tipo").val());
+         formData.append("Descripcion", $("#Descripcion").val());
+
+        $.ajax({
+            type: "POST",
+            url: '@Href("~/Home/RegistrarEditarFalla")',
+            data: formData,
+            contentType: false,
+            dataType: "html",
+            cache: false,
+            processData: false,
+            success: function (response) {
+
+                $("#mdl_editarAgregarFallas").find(".modal-body").html(response);
+                var mensaje = $("#mdlFalla_mensaje").val();
+                if (mensaje == "okay") {
+                    Swal.fire(
+                        'Completado!',
+                        'Registro de Falla guardado!',
+                        'success'
+                    )
+                    $("#mdl_editarAgregarFallas").modal('hide');
+                    AbrirModalFallas();
+                }
+                if (mensaje == "error") {
+                    Swal.fire(
+                        'Algo sucedio!',
+                        'Error al guardar!',
+                        'info'
+                    )
+                }
+            },
+            error: function () {
+            }
+        });
     }
 
 </script>

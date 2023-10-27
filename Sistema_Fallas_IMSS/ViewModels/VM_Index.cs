@@ -41,13 +41,17 @@ namespace Sistema_Fallas_IMSS.ViewModels
     {
         public int Id_tipo { get; set; }
         public string Tipo_falla { get; set; }
-        public List<VM_Fallas> Fallas { get; set; }
+        public List<VM_Fallas> Fallas { get; set; } = new List<VM_Fallas>();
+        public string Mensaje { get; set; }
 
     }
     public class VM_Fallas
     {
         public int Id { get; set; }
-        public int Id_Tipo { get; set; }
+        public int? Id_Tipo { get; set; }
+        public string Ddl_tipo { get; set; }
+        public List<SelectListItem> Tipos { get; set; } = new List<SelectListItem>();
         public string Descripcion { get; set; }
+        public string Mensaje { get; set; }
     }
 }

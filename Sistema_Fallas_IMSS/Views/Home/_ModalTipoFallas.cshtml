@@ -12,7 +12,7 @@
         margin: 5px;
     }
 </style>
-<button type="button" class="btn btn-outline-primary" onclick="AgregarTipoFalla()">Agregar Tipo de Falla</button>
+<button type="button" class="btn btn-outline-primary" onclick="AbrirModalTipo(0)">Agregar Tipo de Falla</button>
 <br />
 <br />
 <div class="accordion" id="accordionExample">
@@ -21,12 +21,12 @@
         <div class="accordion-item">
             <h2 class="accordion-header" id="headingdiv_@item.Id_tipo">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#div_@item.Id_tipo" aria-expanded="false" aria-controls="div_@item.Id_tipo">
-                    <a style="margin-right: 10px;" href="#" onclick="" class="btn btn-outline-primary"><span style='text-align:center;'><i class='fa-solid fa-pen-to-square'></i></span></a>@item.Tipo_falla
+                    <a style="margin-right: 10px;" href="#" onclick="AbrirModalTipo(@item.Id_tipo)" class="btn btn-outline-primary"><span style='text-align:center;'><i class='fa-solid fa-pen-to-square'></i></span></a>@item.Tipo_falla
                 </button>     
             </h2>
             <div id="div_@item.Id_tipo" class="accordion-collapse collapse" aria-labelledby="div_@item.Id_tipo" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
-                    <button  type="button" class="btn btn-outline-secondary" onclick="AgregarFalla(@item.Id_tipo)"><span><i class="fa-solid fa-circle-plus"></i></span> Nueva Falla</button>
+                    <button  type="button" class="btn btn-outline-secondary" onclick="AbrirModalFalla(0,@item.Id_tipo)"><span><i class="fa-solid fa-circle-plus"></i></span> Nueva Falla</button>
                         @foreach (var falla in item.Fallas)
                         {
                             <div class="row filaFalla">
@@ -34,13 +34,10 @@
                                     <strong>@falla.Descripcion</strong>
                                 </div>
                                 <div class="col-sm-1 col-md-1 col-lg-1">
-                                    <button type="button" class="btn btn-outline-primary"><span style='text-align:center'><i class='fa-solid fa-pen-to-square'></i></span></button>
+                                    <button type="button" onclick="AbrirModalFalla(@falla.Id,@falla.Id_Tipo)" class="btn btn-outline-primary"><span style='text-align:center'><i class='fa-solid fa-pen-to-square'></i></span></button>
                                 </div>                             
                             </div>
                         }
-                    @*@if (Sistema_Fallas_IMSS.Controllers.HomeController.ObtenerRol(User.Identity.Name) <= 2)
-                    {
-                    }*@
                 </div>
             </div>
         </div>

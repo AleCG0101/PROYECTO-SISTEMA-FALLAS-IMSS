@@ -2587,6 +2587,8 @@
     <Content Include="Views\Foro\_ModalRegistrarForo.cshtml" />
     <Content Include="Views\Foro\_PartialIndex.cshtml" />
     <Content Include="Views\Home\_ModalTipoFallas.cshtml" />
+    <Content Include="Views\Home\_ModalTipo.cshtml" />
+    <Content Include="Views\Home\_ModalFallas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
