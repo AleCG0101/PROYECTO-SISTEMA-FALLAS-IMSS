@@ -51,6 +51,7 @@ namespace Sistema_Fallas_IMSS.Controllers
                     Usuario = usuario,
                     Persona = persona != null ? persona.ToString() : "Sin existencia actual",
                     Reporte = ObtnerDatos(),
+                    Estatus = "1",
                 };
                 if (ObtenerRol(usuario) > 3)
                 {
@@ -402,20 +403,21 @@ namespace Sistema_Fallas_IMSS.Controllers
             }
         }
 
-        public ActionResult IndexGrid(string _usuario)
+        public ActionResult IndexGrid(string _estatus, string _search)
         {
+            _search = string.IsNullOrEmpty(_search) ? "%%" : "%" + _search + "%";
+            _estatus = _estatus == "0" ? "%%" : _estatus;
             VM_Index data = new VM_Index
             {
-                Reportes = ObtenerReportes(_usuario),
+                Reportes = ObtenerReportes(_estatus, _search),
             };
             return PartialView("_IndexGrid",data);
         }
 
-        private List<VM_Reportes> ObtenerReportes(string _usuario)
+        private List<VM_Reportes> ObtenerReportes(string _estatus, string _search)
         {
             using (var context = new IMSSEntities())
             {
-                var usuario = context.usuarios.Where(us => us.cuenta == _usuario).FirstOrDefault();
 
                 var sqlString = $@"SELECT * FROM (
                                     SELECT
@@ -456,6 +458,15 @@ namespace Sistema_Fallas_IMSS.Controllers
 									LEFT JOIN fallas ON rfallas.id_falla = fallas.Id_falla
 									LEFT JOIN tipos_falla tipo ON fallas.Id_tipo_falla = tipo.Id_tipo_falla
                                   ) AS consulta
+                                    WHERE 
+                                    consulta.estatus LIKE '{_estatus}'
+                                    AND(
+                                    consulta.descripcion LIKE '{_search}'
+                                    OR consulta.falla LIKE '{_search}'
+                                    OR consulta.tipo LIKE '{_search}'
+                                    OR consulta.nombre_area LIKE '{_search}'
+                                    OR consulta.usuario LIKE '{_search}'
+                                    )
                                   ORDER BY consulta.Id_reporte DESC";
 
                 return context.Database.SqlQuery<VM_Reportes>(sqlString).ToList();

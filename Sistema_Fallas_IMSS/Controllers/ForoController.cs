@@ -16,17 +16,20 @@ namespace Sistema_Fallas_IMSS.Controllers
             return View();
         }
 
-        public ActionResult PartialIndex()
+        public ActionResult PartialIndex(string _search)
         {
-            List<VM_Foro> data = ObtenerEntradasForo();
+            _search = string.IsNullOrEmpty(_search) ? "" : _search;
+            List<VM_Foro> data = ObtenerEntradasForo(_search);
             return PartialView("_PartialIndex",data);
         }
 
-        public List<VM_Foro> ObtenerEntradasForo()
+        public List<VM_Foro> ObtenerEntradasForo(string _search)
         {
             using (var context = new IMSSEntities())
             {
-                List<VM_Foro> data = context.foro_soluciones.Select(foro =>
+                List<VM_Foro> data = context.foro_soluciones
+                    .Where(foro => foro.titulo.Contains(_search) || foro.problema.Contains(_search))
+                    .Select(foro =>
                 new VM_Foro
                 {
                     Id_foro = foro.Id_solucion,

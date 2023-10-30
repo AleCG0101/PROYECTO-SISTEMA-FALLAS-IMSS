@@ -14,64 +14,72 @@
         <button class="nav-link" id="area-tab" data-bs-toggle="tab" data-bs-target="#areas" type="button" role="tab" aria-controls="areas" aria-selected="false">Areas</button>
     </li>
 </ul>
-<div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="hospitales" role="tabpanel" aria-labelledby="hospital-tab">
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+<div style="min-height: 100vh;">
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="hospitales" role="tabpanel" aria-labelledby="hospital-tab">
                 <section class="content-header">
+                    <br />
                     <div class="row bottom30">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <h3 style="margin-top: 10px; text-align:center;">Hospitales</h3>
+                            <h2 style="margin-top: 10px;" >Hospitales</h2>
                         </div>
                     </div>
                 </section>
                 <section class="content">
                     <br />
-                    <div>
-                        <button class="btn btn-primary" onclick="AbrirModalHospital(0)">Registrar Hospital</button>
-                    </div>
+                    <div class="row">
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                            <button class="btn btn-primary" onclick="AbrirModalHospital(0)">Registrar Hospital</button>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"></div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="input-group">
+                                <input id="tbx_buscar_hospital" type="text" class="form-control" autocomplete="off" placeholder="Buscar Hospital" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                <button class="btn btn-outline-secondary" type="button" onclick="LimpiarFiltro()" id="btn_limpiar">Limpiar</button>
+                            </div>
+                        </div>
+                    </div>   
                     <br />
-                    @Html.AjaxGrid(Url.Action("HospitalesGrid", "Hospitales",
-                    new
-                         {
-                            _usuario = User.Identity.Name,
-
-                    }), new { id = "gridHospitales", name = "gridHospitales" })
+                    @Html.AjaxGrid(Url.Action("HospitalesGrid", "Hospitales"), new { id = "gridHospitales", name = "gridHospitales" })
                 </section>
-            </div>
         </div>
-    </div>
 
-    <div class="tab-pane fade" id="areas" role="tabpanel" aria-labelledby="area-tab">
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <section class="content-header">
-                    <div class="row bottom30">
+        <div class="tab-pane fade" id="areas" role="tabpanel" aria-labelledby="area-tab">
+
+                    <section class="content-header">
                         <br />
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <h3 style="margin-top: 10px; text-align:center;">Areas</h3>
+                        <div class="row bottom30">
+                            <br />
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <h2 style="margin-top: 10px;">Areas</h2>
+                            </div>
                         </div>
-                    </div>
-                </section>
-                <section class="content">
-                    <br />
-                    <div>
-                        <button class="btn btn-primary" onclick="AbrirModalArea(0)">Registrar Area</button>
-                    </div>
-                    <br />
-                    @Html.AjaxGrid(Url.Action("AreasGrid", "Hospitales",
-                    new
-                         {
-                            _usuario = User.Identity.Name,
+                    </section>
+                    <section class="content">
+                        <br />
+                        <div class="row">
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                <button class="btn btn-primary" onclick="AbrirModalArea(0)">Registrar Area</button>
+                            </div>
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <div class="input-group">
+                                    <input id="tbx_buscar_area" type="text" class="form-control" autocomplete="off" placeholder="Buscar Area" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="LimpiarFiltro2()" id="btn_limpiar">Limpiar</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <br />
+                        @Html.AjaxGrid(Url.Action("AreasGrid", "Hospitales"), new { id = "gridAreas", name = "gridAreas" })
+                    </section>
 
-                    }), new { id = "gridAreas", name = "gridAreas" })
-                </section>
-            </div>
+        </div>
+        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+
         </div>
     </div>
-    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
 
-    </div>
 </div>
 
 <!--Modal para Editar/Crear Hospitales-->
@@ -137,6 +145,39 @@
         [].forEach.call(document.getElementsByClassName('mvc-grid'), function (element) {
             new MvcGrid(element);
         });
+    }
+
+    document.getElementById('tbx_buscar_hospital').addEventListener('keyup', function (event) {
+
+        if (event.key != 'Enter') {
+            var grid = new MvcGrid(document.querySelector('#gridHospitales'));
+            grid.query.set('_search', this.value);
+            grid.reload();
+
+        };
+    });
+
+    function LimpiarFiltro() {
+        $("#tbx_buscar_hospital").val('');
+        var grid = new MvcGrid(document.querySelector('#gridHospitales'));
+        grid.query.set('_search', "");
+        grid.reload();
+    }
+    document.getElementById('tbx_buscar_area').addEventListener('keyup', function (event) {
+
+        if (event.key != 'Enter') {
+            var grid = new MvcGrid(document.querySelector('#gridAreas'));
+            grid.query.set('_search', this.value);
+            grid.reload();
+
+        };
+    });
+
+    function LimpiarFiltro2() {
+        $("#tbx_buscar_area").val('');
+        var grid = new MvcGrid(document.querySelector('#gridAreas'));
+        grid.query.set('_search', "");
+        grid.reload();
     }
 
     function AbrirModalHospital(id_hospital) {

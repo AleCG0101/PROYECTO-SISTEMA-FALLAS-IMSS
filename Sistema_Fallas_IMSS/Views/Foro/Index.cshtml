@@ -8,13 +8,18 @@
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12">
             <h2>Foro de Soluciones</h2>
+            <hr />
         </div>
-        @if (Sistema_Fallas_IMSS.Controllers.HomeController.ObtenerRol(User.Identity.Name) <= 2)
-        {
-            <div class="col-sm-12 col-md-12 col-lg-12">
-                <button class="btn btn-primary" onclick="AbrirModalForo(0)">Agregar</button>
+        <div class="col-sm-2 col-md-2 col-lg-2">
+            <button class="btn btn-primary" onclick="AbrirModalForo(0)"><span><i class="fa-solid fa-circle-plus"></i></span> Nuevo</button>
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4"></div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <div class="input-group">
+                <input id="tbx_buscar" type="text" class="form-control" autocomplete="off" placeholder="Buscar" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <button class="btn btn-outline-secondary" type="button" onclick="BuscarForo()" id="btn_limpiar"><span><i class="fa-solid fa-magnifying-glass"></i></span> Buscar</button>
             </div>
-        }
+        </div>
     </div>
     <br />
     <div id="div_partialindex">
@@ -46,13 +51,13 @@
 
     window.onload = (event) => {
 
-        CargarIndex();
+        CargarIndex("");
     }
 
-    function CargarIndex() {
-         $.ajax({
+    function CargarIndex(search) {
+        $.ajax({
             type: "GET",
-            url: '@Href("~/Foro/PartialIndex")',
+            url: '@Href("~/Foro/PartialIndex?_search=")'+search,
             data: null,
             dataType: "html",
             success: function (response) {
@@ -62,6 +67,11 @@
             error: function () {
             }
         });
+    }
+
+    function BuscarForo() {
+        var search = $("#tbx_buscar").val();
+        CargarIndex(search);
     }
 
     function AbrirModalForo(id_foro) {
@@ -113,7 +123,7 @@
                         'success'
                     )
                     $("#mdl_Foro").modal('hide');
-                    CargarIndex();
+                    CargarIndex("");
                 }
                 if (mensaje == "error") {
                     Swal.fire(

@@ -17,9 +17,10 @@
 <div class="row" style="min-height: 100vh;">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <section class="content-header">
+            <br />
             <div class="row bottom30">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <h3 style="margin-top: 10px;">Reportes</h3>
+                    <h2 style="margin-top: 10px;">Reportes</h2>
                     <hr />
                 </div>
             </div>
@@ -36,14 +37,25 @@
                         Fallas
                     </button>
                 </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="input-group">
+                        <input id="tbx_buscar" type="text" class="form-control" autocomplete="off" placeholder="Buscar Reporte" aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-secondary" type="button" onclick="LimpiarFiltro()" id="btn_limpiar">Limpiar</button>
+                    </div>
+                </div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                    @Html.DropDownListFor(x => x.Estatus, new List<SelectListItem>
+                           {
+                               new SelectListItem { Text = "Todos", Value = "0"},
+                               new SelectListItem { Text = "En proceso", Value = "1"},
+                               new SelectListItem { Text = "Atentido", Value = "2"},
+                               new SelectListItem { Text = "Cancelado", Value = "3"}
+                           },
+                           new { @class = "btn btn-secondary dropdown-toggle", @onchange = "DdlEstatusChanged()" })
+                </div>
             </div>
             <br />
-            @Html.AjaxGrid(Url.Action("IndexGrid", "Home",
-            new
-                 {
-                    _usuario = User.Identity.Name,
-
-            }), new { id = "gridReportes", name = "gridReportes" })
+            @Html.AjaxGrid(Url.Action("IndexGrid", "Home", new {_estatus = Model.Estatus}), new { id = "gridReportes", name = "gridReportes" })
         </section>
     </div>
 </div>
@@ -137,6 +149,30 @@
         [].forEach.call(document.getElementsByClassName('mvc-grid'), function (element) {
             new MvcGrid(element);
         });
+    }
+
+    document.getElementById('tbx_buscar').addEventListener('keyup', function (event) {
+
+        if (event.key != 'Enter') {
+            var grid = new MvcGrid(document.querySelector('.mvc-grid'));
+            grid.query.set('_search', this.value);
+            grid.reload();
+
+        };
+    });
+
+    function LimpiarFiltro() {
+        $("#tbx_buscar").val('');
+        var grid = new MvcGrid(document.querySelector('.mvc-grid'));
+        grid.query.set('_search', "");
+        grid.reload();
+    }
+
+    function DdlEstatusChanged() {
+        var estatus = $("#Estatus").val();
+        var grid = new MvcGrid(document.querySelector('.mvc-grid'));
+        grid.query.set('_estatus', estatus);
+        grid.reload();
     }
 
     function DdlTipoChange() {

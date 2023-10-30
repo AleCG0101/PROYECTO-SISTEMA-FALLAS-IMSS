@@ -21,14 +21,18 @@ namespace Sistema_Fallas_IMSS.Controllers
             return View();
         }
 
-        public ActionResult HospitalesGrid()
+        public ActionResult HospitalesGrid(string _search)
         {
+            _search = string.IsNullOrEmpty(_search) ? "" : _search;
             using(var context = new IMSSEntities())
             {
                 VM_Hospital data = new VM_Hospital
                 {
 
                     Hospitales = (from hospital in context.hospitales_imss
+                                  where hospital.nombre.Contains(_search)
+                                    || hospital.direccion.Contains(_search)
+                                    || hospital.municipio.Contains(_search)
                                   select new VM_Hospitales
                                   {
                                       Id = hospital.Id,
@@ -44,15 +48,17 @@ namespace Sistema_Fallas_IMSS.Controllers
             }
         }
 
-        public ActionResult AreasGrid()
+        public ActionResult AreasGrid(string _search)
         {
-            using(var context = new IMSSEntities())
+            _search = string.IsNullOrEmpty(_search) ? "" : _search;
+            using (var context = new IMSSEntities())
             {
                 VM_Area data = new VM_Area
                 {
                     Areas = (from area in context.areas_imss
                              join hospital in context.hospitales_imss
                                 on area.id_hospital equals hospital.Id
+                            where area.nombre_area.Contains(_search)
                              select new VM_Areas
                              {
                                  Id = area.Id_area,

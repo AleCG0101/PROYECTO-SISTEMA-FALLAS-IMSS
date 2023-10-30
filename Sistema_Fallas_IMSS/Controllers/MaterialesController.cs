@@ -18,13 +18,17 @@ namespace Sistema_Fallas_IMSS.Controllers
             return View();
         }
 
-        public ActionResult MaterialesGrid()
+        public ActionResult MaterialesGrid(string _search)
         {
-            using(var context = new IMSSEntities())
+            _search = string.IsNullOrEmpty(_search) ? "" : _search;
+            using (var context = new IMSSEntities())
             {
                 List<VM_MaterialesCatalogo> materiales = (from material in context.materiales
                                                     join tipo in context.tipo_hardware on material.id_tipo_hardware equals tipo.Id_tipo_hardware
                                                     join estados in context.material_estados on material.id_estado equals estados.Id_estado
+                                                    where material.nombre.Contains(_search)
+                                                    || material.marca.Contains(_search)
+                                                    || material.modelo.Contains(_search)
                                                     select new VM_MaterialesCatalogo
                                                     {
                                                         Id_material = material.Id_material,

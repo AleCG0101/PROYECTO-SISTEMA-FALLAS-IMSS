@@ -13,6 +13,7 @@ namespace Sistema_Fallas_IMSS.ViewModels
         public string Persona { get; set; }
         public string Usuario { get; set; }
         public string Direccion_ip { get; set; }
+        public string Estatus { get; set; }
         public VM_Reportes Reporte { get; set; }
         public List<VM_Reportes> Reportes { get; set; } = new List<VM_Reportes>();
 
