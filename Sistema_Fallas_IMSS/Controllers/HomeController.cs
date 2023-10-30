@@ -327,7 +327,7 @@ namespace Sistema_Fallas_IMSS.Controllers
                 {
                     if (_falla.Id > 0)
                     {
-                        var falla = context.tipos_falla.Find(_falla.Id);
+                        var falla = context.fallas.Find(_falla.Id);
                         falla.descripcion = _falla.Descripcion;
                         falla.Id_tipo_falla = Convert.ToInt32(_falla.Ddl_tipo);
                     }

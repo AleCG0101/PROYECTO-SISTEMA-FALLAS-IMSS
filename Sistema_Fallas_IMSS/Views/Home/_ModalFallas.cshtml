@@ -3,7 +3,7 @@
     ViewBag.Title = "_ModalFallas";
     Layout = null;
 }
-@Html.HiddenFor(model => model.Id)
+@Html.HiddenFor(model => model.Id, new {@id = "hdf_id_falla"})
 @Html.HiddenFor(model => model.Mensaje, new { @id = "mdlFalla_mensaje" })
 <div class="container-fluid">
     <div class="row">
