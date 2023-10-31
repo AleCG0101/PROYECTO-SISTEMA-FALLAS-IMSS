@@ -4,31 +4,32 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ef9b69c504104b00a426b4b966edc33d" Name="Diagram1">
-        <EntityTypeShape EntityType="DBIMSS.areas_imss" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBIMSS.existencias" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBIMSS.fallas" Width="1.5" PointX="10" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBIMSS.hospitales_imss" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBIMSS.material_estados" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBIMSS.materiales" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBIMSS.operacion" Width="1.5" PointX="5.75" PointY="10.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBIMSS.reporte" Width="1.5" PointX="10.75" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBIMSS.reporte_fallas" Width="1.5" PointX="13" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBIMSS.rol_operacion" Width="1.5" PointX="8" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBIMSS.roles" Width="1.5" PointX="5.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBIMSS.tipo_hardware" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBIMSS.tipos_falla" Width="1.5" PointX="7.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBIMSS.usuarios" Width="1.5" PointX="8" PointY="10.125" IsExpanded="true" />
-        <AssociationConnector Association="DBIMSS.FK__areas_ims__id_ho__628FA481" ManuallyRouted="false" />
-        <AssociationConnector Association="DBIMSS.FK__existenci__id_ar__693CA210" ManuallyRouted="false" />
-        <AssociationConnector Association="DBIMSS.FK__existenci__id_ma__68487DD7" ManuallyRouted="false" />
-        <AssociationConnector Association="DBIMSS.FK__fallas__Id_tipo___6A30C649" ManuallyRouted="false" />
-        <AssociationConnector Association="DBIMSS.FK__materiale__id_es__6754599E" ManuallyRouted="false" />
-        <AssociationConnector Association="DBIMSS.FK__materiale__id_ti__66603565" ManuallyRouted="false" />
-        <AssociationConnector Association="DBIMSS.FK__rol_opera__id_op__656C112C" ManuallyRouted="false" />
-        <AssociationConnector Association="DBIMSS.FK__reporte_f__id_re__6B24EA82" ManuallyRouted="false" />
-        <AssociationConnector Association="DBIMSS.FK__rol_opera__Id_ro__6477ECF3" ManuallyRouted="false" />
-        <AssociationConnector Association="DBIMSS.FK__usuarios__id_rol__6383C8BA" ManuallyRouted="false" />
+      <Diagram DiagramId="d5c33ce8f43d4e20b054adea272f9cf0" Name="Diagram1">
+        <EntityTypeShape EntityType="SISTEMA_FALLAS_IMSSModel.areas_imss" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SISTEMA_FALLAS_IMSSModel.existencias" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="SISTEMA_FALLAS_IMSSModel.fallas" Width="1.5" PointX="10" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SISTEMA_FALLAS_IMSSModel.foro_soluciones" Width="1.5" PointX="2.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SISTEMA_FALLAS_IMSSModel.hospitales_imss" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SISTEMA_FALLAS_IMSSModel.material_estados" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="SISTEMA_FALLAS_IMSSModel.materiales" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SISTEMA_FALLAS_IMSSModel.operacion" Width="1.5" PointX="5.75" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SISTEMA_FALLAS_IMSSModel.reporte" Width="1.5" PointX="10.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="SISTEMA_FALLAS_IMSSModel.reporte_fallas" Width="1.5" PointX="13" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SISTEMA_FALLAS_IMSSModel.rol_operacion" Width="1.5" PointX="8" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SISTEMA_FALLAS_IMSSModel.roles" Width="1.5" PointX="5.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SISTEMA_FALLAS_IMSSModel.tipo_hardware" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="SISTEMA_FALLAS_IMSSModel.tipos_falla" Width="1.5" PointX="7.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="SISTEMA_FALLAS_IMSSModel.usuarios" Width="1.5" PointX="8" PointY="10.125" IsExpanded="true" />
+        <AssociationConnector Association="SISTEMA_FALLAS_IMSSModel.FK__areas_ims__id_ho__628FA481" ManuallyRouted="false" />
+        <AssociationConnector Association="SISTEMA_FALLAS_IMSSModel.FK__existenci__id_ar__693CA210" ManuallyRouted="false" />
+        <AssociationConnector Association="SISTEMA_FALLAS_IMSSModel.FK__existenci__id_ma__68487DD7" ManuallyRouted="false" />
+        <AssociationConnector Association="SISTEMA_FALLAS_IMSSModel.FK__fallas__Id_tipo___6A30C649" ManuallyRouted="false" />
+        <AssociationConnector Association="SISTEMA_FALLAS_IMSSModel.FK__materiale__id_es__6754599E" ManuallyRouted="false" />
+        <AssociationConnector Association="SISTEMA_FALLAS_IMSSModel.FK__materiale__id_ti__66603565" ManuallyRouted="false" />
+        <AssociationConnector Association="SISTEMA_FALLAS_IMSSModel.FK__rol_opera__id_op__656C112C" ManuallyRouted="false" />
+        <AssociationConnector Association="SISTEMA_FALLAS_IMSSModel.FK__reporte_f__id_re__6B24EA82" ManuallyRouted="false" />
+        <AssociationConnector Association="SISTEMA_FALLAS_IMSSModel.FK__rol_opera__Id_ro__6477ECF3" ManuallyRouted="false" />
+        <AssociationConnector Association="SISTEMA_FALLAS_IMSSModel.FK__usuarios__id_rol__6383C8BA" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

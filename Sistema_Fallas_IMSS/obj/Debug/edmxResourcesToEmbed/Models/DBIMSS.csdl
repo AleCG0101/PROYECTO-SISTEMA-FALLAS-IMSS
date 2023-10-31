@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="DBIMSS" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+<Schema Namespace="SISTEMA_FALLAS_IMSSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityType Name="areas_imss">
     <Key>
       <PropertyRef Name="Id_area" />
@@ -36,6 +36,17 @@
     <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="Id_tipo_falla" Type="Int32" />
     <NavigationProperty Name="tipos_falla" Relationship="Self.FK__fallas__Id_tipo___6A30C649" FromRole="fallas" ToRole="tipos_falla" />
+  </EntityType>
+  <EntityType Name="foro_soluciones">
+    <Key>
+      <PropertyRef Name="Id_solucion" />
+    </Key>
+    <Property Name="Id_solucion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="problema" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="solucion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="autor" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="titulo" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="hospitales_imss">
     <Key>
@@ -276,6 +287,7 @@
     <EntitySet Name="areas_imss" EntityType="Self.areas_imss" />
     <EntitySet Name="existencias" EntityType="Self.existencias" />
     <EntitySet Name="fallas" EntityType="Self.fallas" />
+    <EntitySet Name="foro_soluciones" EntityType="Self.foro_soluciones" />
     <EntitySet Name="hospitales_imss" EntityType="Self.hospitales_imss" />
     <EntitySet Name="material_estados" EntityType="Self.material_estados" />
     <EntitySet Name="materiales" EntityType="Self.materiales" />

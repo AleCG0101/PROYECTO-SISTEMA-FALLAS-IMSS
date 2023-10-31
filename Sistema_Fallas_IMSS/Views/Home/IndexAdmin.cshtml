@@ -14,31 +14,48 @@
     }
 </style>
 @Html.HiddenFor(model => model.Direccion_ip)
-<div class="row">
+<div class="row" style="min-height: 100vh;">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <section class="content-header">
+            <br />
             <div class="row bottom30">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <h3 style="margin-top: 10px;">Reportes</h3>
+                    <h2 style="margin-top: 10px;">Reportes</h2>
+                    <hr />
                 </div>
             </div>
         </section>
         <section class="content">
             <br />
-            <div>
-                <button class="btn btn-primary" onclick="AbrirModalReporte()">
-                    Registrar Reporte
-                </button>
+            <div class="row">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <button class="btn btn-primary" onclick="AbrirModalReporte()">
+                        Registrar Reporte
+                    </button>
+
+                    <button class="btn btn-outline-secondary" onclick="AbrirModalFallas()">
+                        Fallas
+                    </button>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="input-group">
+                        <input id="tbx_buscar" type="text" class="form-control" autocomplete="off" placeholder="Buscar Reporte" aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-secondary" type="button" onclick="LimpiarFiltro()" id="btn_limpiar">Limpiar</button>
+                    </div>
+                </div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                    @Html.DropDownListFor(x => x.Estatus, new List<SelectListItem>
+                           {
+                               new SelectListItem { Text = "Todos", Value = "0"},
+                               new SelectListItem { Text = "En proceso", Value = "1"},
+                               new SelectListItem { Text = "Atentido", Value = "2"},
+                               new SelectListItem { Text = "Cancelado", Value = "3"}
+                           },
+                           new { @class = "btn btn-secondary dropdown-toggle", @onchange = "DdlEstatusChanged()" })
+                </div>
             </div>
             <br />
-            <form id="FormFilter" method="get" action="">
-            </form>
-            @Html.AjaxGrid(Url.Action("IndexGrid", "Home",
-            new
-                 {
-                    _usuario = User.Identity.Name,
-
-            }), new { id = "gridReportes", name = "gridReportes" })
+            @Html.AjaxGrid(Url.Action("IndexGrid", "Home", new {_estatus = Model.Estatus}), new { id = "gridReportes", name = "gridReportes" })
         </section>
     </div>
 </div>
@@ -64,6 +81,66 @@
     </div>
 </div>
 
+<!--Modal para Fallas-->
+<div id="mdl_Fallas" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Registro de Fallas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <!-- PartialView _ModalTiposFallas.cshtml -->
+
+            </div>
+            <!-- Modal footer -->
+            <div class=" modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal para Agregar o Editar Tipos de Fallas-->
+<div id="mdl_editarAgregarTipo" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Registro de Fallas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <!-- PartialView _ModalTipo.cshtml -->
+
+            </div>
+            <!-- Modal footer -->
+            <div class=" modal-footer">
+                <button type="button" class="btn btn-success" onclick="RegistrarEditarTipo()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal para Agregar o Editar Fallas-->
+<div id="mdl_editarAgregarFallas" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Registro de Fallas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <!-- PartialView _ModalFallas.cshtml -->
+
+            </div>
+            <!-- Modal footer -->
+            <div class=" modal-footer">
+                <button type="button" class="btn btn-success" onclick="RegistrarEditarFalla()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="~/Scripts/MvcGrid/mvc-grid.js"></script>
 <script type="text/javascript">
 
@@ -72,6 +149,30 @@
         [].forEach.call(document.getElementsByClassName('mvc-grid'), function (element) {
             new MvcGrid(element);
         });
+    }
+
+    document.getElementById('tbx_buscar').addEventListener('keyup', function (event) {
+
+        if (event.key != 'Enter') {
+            var grid = new MvcGrid(document.querySelector('.mvc-grid'));
+            grid.query.set('_search', this.value);
+            grid.reload();
+
+        };
+    });
+
+    function LimpiarFiltro() {
+        $("#tbx_buscar").val('');
+        var grid = new MvcGrid(document.querySelector('.mvc-grid'));
+        grid.query.set('_search', "");
+        grid.reload();
+    }
+
+    function DdlEstatusChanged() {
+        var estatus = $("#Estatus").val();
+        var grid = new MvcGrid(document.querySelector('.mvc-grid'));
+        grid.query.set('_estatus', estatus);
+        grid.reload();
     }
 
     function DdlTipoChange() {
@@ -134,6 +235,23 @@
         });
     }
 
+    function AbrirModalFallas() {
+        $.ajax({
+            type: "GET",
+            url: '@Href("~/Home/AbrirModalFallas")',
+            data: null,
+            dataType: "html",
+            contentType: null,
+            success: function (response) {
+
+                $("#mdl_Fallas").find(".modal-body").html(response);
+                $("#mdl_Fallas").modal('show');
+            },
+            error: function () {
+            }
+        });
+    }
+
     function RegistrarReporte() {
 
         var formData = new FormData();
@@ -172,6 +290,203 @@
             error: function (response) {
                 alert(response.responseText);
             },
+        });
+    }
+
+    function FinalizarReporte(id_reporte) {
+        Swal.fire({
+            title: '¿Seguro que quieres Finalizar este reporte?',
+            text: "",
+            icon: "info",
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Sí',
+            denyButtonText: 'No, Salir',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Href("~/Home/FinalizarReporte")',
+                    data: JSON.stringify({ _id_reporte: id_reporte }),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (response) {
+
+                        if (response == 1) {
+                            Swal.fire(
+                                'Finalizado!',
+                                'El reporte ha sido finalizado!',
+                                'success'
+                            )
+                            var grid = new MvcGrid(document.querySelector(".mvc-grid"))
+                            grid.reload();
+
+                        }
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                });
+            }
+        })
+    }
+
+    function CancelarReporte(id_reporte) {
+        Swal.fire({
+            title: '¿Seguro que quieres Cancelar este reporte?',
+            text: "",
+            icon: "info",
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Sí',
+            denyButtonText: 'No, Salir',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Href("~/Home/CancelarReporte")',
+                    data: JSON.stringify({ _id_reporte: id_reporte }),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (response) {
+
+                        if (response == 1) {
+                            Swal.fire(
+                                'Cancelado!',
+                                'El reporte ha sido cancelado!',
+                                'success'
+                            )
+                            var grid = new MvcGrid(document.querySelector(".mvc-grid"))
+                            grid.reload();
+
+                        }
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                });
+            }
+        })
+    }
+
+    function AbrirModalFalla(id_falla, id_tipo) {
+        $.ajax({
+            type: "POST",
+            url: '@Href("~/Home/ModalFalla")',
+            data: JSON.stringify({ _id_falla: id_falla, _id_tipo: id_tipo }),
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+
+                $("#mdl_editarAgregarFallas").find(".modal-body").html(response);
+                $("#mdl_editarAgregarFallas").modal('show');
+            },
+            error: function () {
+            }
+        });
+    }
+
+    function AbrirModalTipo(id_tipo) {
+        $.ajax({
+            type: "POST",
+            url: '@Href("~/Home/ModalTipo")',
+            data: JSON.stringify({ _id_tipo: id_tipo }),
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+
+                $("#mdl_editarAgregarTipo").find(".modal-body").html(response);
+                $("#mdl_editarAgregarTipo").modal('show');
+            },
+            error: function () {
+            }
+        });
+    }
+
+    function RegistrarEditarTipo() {
+        var formData = new FormData();
+        formData.append("Id_tipo", $("#Id_tipo").val());
+        formData.append("Tipo_falla", $("#Tipo_falla").val());
+
+        $.ajax({
+            type: "POST",
+            url: '@Href("~/Home/RegistrarEditarTipo")',
+            data: formData,
+            contentType: false,
+            dataType: "html",
+            cache: false,
+            processData: false,
+            success: function (response) {
+
+                $("#mdl_editarAgregarTipo").find(".modal-body").html(response);
+                var mensaje = $("#mdlTipo_mensaje").val();
+                if (mensaje == "okay") {
+                    Swal.fire(
+                        'Completado!',
+                        'Tipo de Falla guardado!',
+                        'success'
+                    )
+                    $("#mdl_editarAgregarTipo").modal('hide');
+                    AbrirModalFallas();
+                }
+                if (mensaje == "error") {
+                    Swal.fire(
+                        'Algo sucedio!',
+                        'Error al guardar!',
+                        'info'
+                    )
+                }
+            },
+            error: function () {
+            }
+        });
+    }
+
+     function RegistrarEditarFalla() {
+        var formData = new FormData();
+         formData.append("Id", $("#hdf_id_falla").val());
+         formData.append("Ddl_tipo", $("#Ddl_tipo").val());
+         formData.append("Descripcion", $("#Descripcion").val());
+
+        $.ajax({
+            type: "POST",
+            url: '@Href("~/Home/RegistrarEditarFalla")',
+            data: formData,
+            contentType: false,
+            dataType: "html",
+            cache: false,
+            processData: false,
+            success: function (response) {
+
+                $("#mdl_editarAgregarFallas").find(".modal-body").html(response);
+                var mensaje = $("#mdlFalla_mensaje").val();
+                if (mensaje == "okay") {
+                    Swal.fire(
+                        'Completado!',
+                        'Registro de Falla guardado!',
+                        'success'
+                    )
+                    $("#mdl_editarAgregarFallas").modal('hide');
+                    AbrirModalFallas();
+                }
+                if (mensaje == "error") {
+                    Swal.fire(
+                        'Algo sucedio!',
+                        'Error al guardar!',
+                        'info'
+                    )
+                }
+            },
+            error: function () {
+            }
         });
     }
 

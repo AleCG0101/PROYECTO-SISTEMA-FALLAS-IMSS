@@ -1,0 +1,18 @@
+﻿@model Sistema_Fallas_IMSS.ViewModels.VM_TipoFallas
+@{
+    ViewBag.Title = "_ModalTipo";
+    Layout = null;
+}
+@Html.HiddenFor(model => model.Id_tipo)
+@Html.HiddenFor(model => model.Mensaje, new { @id = "mdlTipo_mensaje" })
+<div class="container-fluid">
+    <br />
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <label>Falla:</label>
+            @Html.TextBoxFor(model => model.Tipo_falla, "", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Tipo_falla, null, new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+

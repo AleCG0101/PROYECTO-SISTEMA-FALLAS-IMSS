@@ -9,12 +9,14 @@
     <link rel="stylesheet" href="~/Content/CSS/font-awesome/css/fontawesome.css">
     <link rel="stylesheet" href="~/Content/CSS/font-awesome/css/brands.css">
     <link rel="stylesheet" href="~/Content/CSS/font-awesome/css/solid.css">
+    <link rel="stylesheet" href="~/Content/CSS/progress_shark.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.31/dist/sweetalert2.min.css">
 
     <link href="~/Content/MvcGrid/mvc-grid.css" rel="stylesheet">
 
 
     <title>@ViewBag.Title - Sistema de Reportes de Fallas</title>
+
 </head>
 <body>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark" style="background-color: #13322B;">
@@ -26,16 +28,18 @@
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    @if (Sistema_Fallas_IMSS.Controllers.HomeController.ObtenerRol(User.Identity.Name) == 1)
+                    @if (Sistema_Fallas_IMSS.Controllers.HomeController.ObtenerRol(User.Identity.Name) <= 2)
                     {
                         <li>@Html.ActionLink("Hospitales", "Index", "Hospitales", new { usuario = User.Identity.Name }, new { @class = "nav-link" })</li>
                         <li>@Html.ActionLink("Materiales", "Index", "Materiales", new { usuario = User.Identity.Name }, new { @class = "nav-link" })</li>
                         <li>@Html.ActionLink("Usuarios", "Index", "Usuarios", new { usuario = User.Identity.Name }, new { @class = "nav-link" })</li>
-
+                    }
+                    @if (Sistema_Fallas_IMSS.Controllers.HomeController.ObtenerRol(User.Identity.Name) <= 3)
+                    {
+                        <li>@Html.ActionLink("Foro", "Index", "Foro", new { usuario = User.Identity.Name }, new { @class = "nav-link" })</li>
                     }
                 </ul>
-                <div class="nav-item ml-auto">@Html.ActionLink("Salir", "Logout", "Account", new { usuario = User.Identity.Name }, new { @class = "btn btn-danger" })</div>
-
+                <div class="nav-item ml-auto"><a href="@Url.Action("Logout", "Account")" class="btn btn-danger">Salir</a></div>
             </div>
         </div>
     </nav>
@@ -48,6 +52,6 @@
     </div>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.31/dist/sweetalert2.all.min.js"></script>
+    <script src="~/Content/Plugins/sweetalert2.all.min.js"></script>
 </body>
 </html>

@@ -1,0 +1,45 @@
+﻿@model List<Sistema_Fallas_IMSS.ViewModels.VM_TipoFallas>
+@{
+    ViewBag.Title = "_PartialIndex";
+    Layout = null;
+}
+<style>
+    .filaFalla {
+        border-radius: 4px;
+        border: 0.5px solid #AFAFAF;
+        background: #FFF;
+        padding: 5px;
+        margin: 5px;
+    }
+</style>
+<button type="button" class="btn btn-outline-primary" onclick="AbrirModalTipo(0)">Agregar Tipo de Falla</button>
+<br />
+<br />
+<div class="accordion" id="accordionExample">
+    @foreach (var item in Model)
+    {
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingdiv_@item.Id_tipo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#div_@item.Id_tipo" aria-expanded="false" aria-controls="div_@item.Id_tipo">
+                    <a style="margin-right: 10px;" href="#" onclick="AbrirModalTipo(@item.Id_tipo)" class="btn btn-outline-primary"><span style='text-align:center;'><i class='fa-solid fa-pen-to-square'></i></span></a>@item.Tipo_falla
+                </button>     
+            </h2>
+            <div id="div_@item.Id_tipo" class="accordion-collapse collapse" aria-labelledby="div_@item.Id_tipo" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <button  type="button" class="btn btn-outline-secondary" onclick="AbrirModalFalla(0,@item.Id_tipo)"><span><i class="fa-solid fa-circle-plus"></i></span> Nueva Falla</button>
+                        @foreach (var falla in item.Fallas)
+                        {
+                            <div class="row filaFalla">
+                                <div class="col-sm-11 col-md-11 col-lg-11">
+                                    <strong>@falla.Descripcion</strong>
+                                </div>
+                                <div class="col-sm-1 col-md-1 col-lg-1">
+                                    <button type="button" onclick="AbrirModalFalla(@falla.Id,@falla.Id_Tipo)" class="btn btn-outline-primary"><span style='text-align:center'><i class='fa-solid fa-pen-to-square'></i></span></button>
+                                </div>                             
+                            </div>
+                        }
+                </div>
+            </div>
+        </div>
+    }
+</div>

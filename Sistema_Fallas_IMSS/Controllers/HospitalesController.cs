@@ -21,14 +21,18 @@ namespace Sistema_Fallas_IMSS.Controllers
             return View();
         }
 
-        public ActionResult HospitalesGrid()
+        public ActionResult HospitalesGrid(string _search)
         {
+            _search = string.IsNullOrEmpty(_search) ? "" : _search;
             using(var context = new IMSSEntities())
             {
                 VM_Hospital data = new VM_Hospital
                 {
 
                     Hospitales = (from hospital in context.hospitales_imss
+                                  where hospital.nombre.Contains(_search)
+                                    || hospital.direccion.Contains(_search)
+                                    || hospital.municipio.Contains(_search)
                                   select new VM_Hospitales
                                   {
                                       Id = hospital.Id,
@@ -44,15 +48,17 @@ namespace Sistema_Fallas_IMSS.Controllers
             }
         }
 
-        public ActionResult AreasGrid()
+        public ActionResult AreasGrid(string _search)
         {
-            using(var context = new IMSSEntities())
+            _search = string.IsNullOrEmpty(_search) ? "" : _search;
+            using (var context = new IMSSEntities())
             {
                 VM_Area data = new VM_Area
                 {
                     Areas = (from area in context.areas_imss
                              join hospital in context.hospitales_imss
                                 on area.id_hospital equals hospital.Id
+                            where area.nombre_area.Contains(_search)
                              select new VM_Areas
                              {
                                  Id = area.Id_area,
@@ -116,8 +122,13 @@ namespace Sistema_Fallas_IMSS.Controllers
         }
 
         [HttpPost]
-        public int RegistrarEditarHospital(VM_Hospitales _hospital)
+        public PartialViewResult RegistrarEditarHospital(VM_Hospitales _hospital)
         {
+            if (!ModelState.IsValid)
+            {
+                _hospital.Mensaje = "validacion";
+                return PartialView("_ModalHospital", _hospital);
+            }
             using (var context = new IMSSEntities())
             {
                 try
@@ -145,11 +156,13 @@ namespace Sistema_Fallas_IMSS.Controllers
 
                     }
                     context.SaveChanges();
-                    return 1;
+                    _hospital.Mensaje = "okay";
+                    return PartialView("_ModalHospital", _hospital);
                 }
                 catch (Exception)
                 {
-                    return 0;
+                    _hospital.Mensaje = "error";
+                    return PartialView("_ModalHospital", _hospital);
                     throw;
                 }
                 
@@ -158,10 +171,21 @@ namespace Sistema_Fallas_IMSS.Controllers
         }
 
         [HttpPost]
-        public int RegistrarEditarArea(VM_Areas _area)
+        public ActionResult RegistrarEditarArea(VM_Areas _area)
         {
             using(var context = new IMSSEntities())
             {
+                _area.Hospitales = (from hospitales in context.hospitales_imss
+                                   select new SelectListItem
+                                   {
+                                       Value = hospitales.Id.ToString(),
+                                       Text = hospitales.nombre,
+                                   }).ToList();
+                if (!ModelState.IsValid)
+                {
+                    _area.Mensaje = "validacion";
+                    return PartialView("_ModalAreas", _area);
+                }
                 try
                 {
                     if (_area.Id > 0)
@@ -181,12 +205,13 @@ namespace Sistema_Fallas_IMSS.Controllers
                         context.areas_imss.Add(area);
                     }
                     context.SaveChanges();
-                    return 1;
+                    _area.Mensaje = "okay";
+                    return PartialView("_ModalAreas", _area);
                 }
                 catch (Exception)
                 {
-                    return 0;
-                    throw;
+                    _area.Mensaje = "error";
+                    return PartialView("_ModalAreas", _area);
                 }
             }
         }

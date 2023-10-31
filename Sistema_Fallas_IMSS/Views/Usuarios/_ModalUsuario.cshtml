@@ -5,27 +5,34 @@
 }
 
 @Html.HiddenFor(model => model.Id, new {@id = "mdlUsuario_hdf_id"})
+@Html.HiddenFor(model => model.Mensaje, new {@id = "mdlUsuario_hdf_mensaje"})
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12">
-            <label>Nombre:</label>
-            @Html.TextBoxFor(model => model.Nombre, "", new { @class = "form-control" })
+            <strong>Nombre:</strong>
+            @Html.TextBoxFor(model => model.Nombre, "", new { @class = "form-control", @autocomplete = "off" })
+            @Html.ValidationMessageFor(model => model.Nombre, null, new { @class = "text-danger" })
         </div>
     </div>
+    <br />
     <div class="row">
         <div class="col-sm-6 col-md-6 col-lg-6">
-            <label>Cuenta:</label>
-            @Html.TextBoxFor(model => model.Cuenta, "", new { @class = "form-control" })
+            <strong>Cuenta:</strong>
+            @Html.TextBoxFor(model => model.Cuenta, "", new { @class = "form-control", @autocomplete = "off" })
+            @Html.ValidationMessageFor(model => model.Cuenta, null, new { @class = "text-danger" })
         </div>
         <div class="col-sm-6 col-md-6 col-lg-6">
-            <label>Contraseña:</label>
-            @Html.TextBox("Pass", "", new { @class = "form-control" })
+            <strong>Contraseña:</strong>
+            @Html.TextBox("Pass", "", new { @type = "password", @class = "form-control", @autocomplete = "off" })
+            @Html.ValidationMessageFor(model => model.Password, null, new { @class = "text-danger" })
         </div>
     </div>
+    <br />
     <div class="row">
         <div class="col-sm-6 col-md-6 col-lg-6">
-            <label>Rol:</label>
+            <strong>Rol:</strong>
             @Html.DropDownListFor(model => model.Rol, Model.Roles, "Seleccione un rol", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Roles, null, new { @class = "text-danger" })
         </div>
     </div>
     <br />

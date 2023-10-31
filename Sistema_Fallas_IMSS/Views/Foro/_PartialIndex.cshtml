@@ -1,0 +1,50 @@
+﻿@model List<Sistema_Fallas_IMSS.ViewModels.VM_Foro>
+@{
+    ViewBag.Title = "_PartialIndex";
+    Layout = null;
+}
+
+<div class="accordion" id="accordionExample">
+    @foreach (var item in Model)
+    {
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingdiv_@item.Id_foro">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#div_@item.Id_foro" aria-expanded="false" aria-controls="div_@item.Id_foro">
+                    @item.Titutlo
+                </button>
+            </h2>
+            <div id="div_@item.Id_foro" class="accordion-collapse collapse" aria-labelledby="div_@item.Id_foro" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <strong>Problema:</strong>
+                                <div>
+                                    @item.Problema
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <strong>Solucion:</strong>
+                                <div>
+                                    @item.Solucion
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <strong>Autor: </strong>@item.Autor  <div><strong>Correo: </strong>@item.Correo</div>
+                        </div>
+                    </div>
+                    <br />
+                    @if (Sistema_Fallas_IMSS.Controllers.HomeController.ObtenerRol(User.Identity.Name) <= 2)
+                    {
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                        <button class="btn btn-primary" onclick="AbrirModalForo(@item.Id_foro)">Editar</button>
+                        </div>
+                    }                
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

@@ -8,14 +8,24 @@ using System.Web;
 using System.IO;
 using System.Web.Mvc;
 using Rotativa;
+using System.Runtime.Remoting;
 
 namespace Sistema_Fallas_IMSS.Controllers
 {
     public class HomeController : Controller
     {
         // GET: Home
-        public ActionResult Index(string usuario)
+        public ActionResult IndexUsuario()
         {
+            return RedirectToAction("Index");
+        }
+        public ActionResult IndexAdmin()
+        {
+            return RedirectToAction("Index");
+        }
+        public ActionResult Index()
+        {
+            string usuario = User.Identity.Name;
             using(var context = new IMSSEntities())
             {
                 if (usuario == null)
@@ -41,6 +51,7 @@ namespace Sistema_Fallas_IMSS.Controllers
                     Usuario = usuario,
                     Persona = persona != null ? persona.ToString() : "Sin existencia actual",
                     Reporte = ObtnerDatos(),
+                    Estatus = "1",
                 };
                 if (ObtenerRol(usuario) > 3)
                 {
@@ -143,11 +154,53 @@ namespace Sistema_Fallas_IMSS.Controllers
                 }
             }
         }
+        [HttpPost]
+        public int FinalizarReporte(int _id_reporte)
+        {
+            try
+            {
+                using (var context = new IMSSEntities())
+                {
+                    var reporte = context.reporte.Find(_id_reporte);
+                    reporte.estatus = 2;
+                    reporte.fecha_concluido = DateTime.Now;
+                    context.SaveChanges();
+                    return 1;
+                }
+            }
+            catch (Exception)
+            {
+                return 0;
+                throw;
+            }
+            
+        }
+        [HttpPost]
+        public int CancelarReporte(int _id_reporte)
+        {
+            try
+            {
+                using (var context = new IMSSEntities())
+                {
+                    var reporte = context.reporte.Find(_id_reporte);
+                    reporte.estatus = 3;
+                    context.SaveChanges();
+                    return 1;
+                }
+            }
+            catch (Exception)
+            {
+                return 0;
+                throw;
+            }
+
+        }
         public ActionResult Reporte(int id_reporte)
         {
             VM_Reportes reporte = ObtenerReporte(id_reporte);
             reporte.Fecha = reporte.Fecha_registro.ToLongDateString();
             reporte.Contacto = String.IsNullOrEmpty(reporte.Contacto) ? "Sin contacto" : reporte.Contacto;
+            reporte.Estado = reporte.Estatus == 1 ? "En proceso" : reporte.Estatus == 2 ? "Atendido" : "Cancelado";
             return View("Documento",reporte);
         }
 
@@ -155,6 +208,151 @@ namespace Sistema_Fallas_IMSS.Controllers
         {           
             return new ActionAsPdf("Reporte", new { id_reporte = _id_reporte });
         }
+
+        public ActionResult AbrirModalFallas()
+        {
+            using (var context = new IMSSEntities())
+            {
+                var tipo_fallas = context.tipos_falla.Select(m => new { m.Id_tipo_falla, m.descripcion }).ToList();
+                List<VM_TipoFallas> data = new List<VM_TipoFallas>();
+                foreach (var item in tipo_fallas)
+                {
+                    VM_TipoFallas falla = new VM_TipoFallas { 
+                        Id_tipo = item.Id_tipo_falla,
+                        Tipo_falla = item.descripcion,
+                    }; 
+                    falla.Fallas = (from fallas in context.fallas
+                                           join tipos in context.tipos_falla on fallas.Id_tipo_falla equals tipos.Id_tipo_falla
+                                           where tipos.Id_tipo_falla == item.Id_tipo_falla
+                                           select new VM_Fallas
+                                           {
+                                               Id = fallas.Id_falla,
+                                               Descripcion = fallas.descripcion,
+                                               Id_Tipo = tipos.Id_tipo_falla,
+
+                                           }).ToList();
+                    data.Add(falla);
+                }
+                return PartialView("_ModalTipoFallas",data);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ModalTipo(int _id_tipo)
+        {
+            VM_TipoFallas data = new VM_TipoFallas();
+            if (_id_tipo == 0)
+            {
+                return PartialView("_ModalTipo", data);
+            }
+            else
+            {
+                using (var context = new IMSSEntities())
+                {
+                    var tipo = context.tipos_falla.Find(_id_tipo);
+                    data.Id_tipo = tipo.Id_tipo_falla;
+                    data.Tipo_falla = tipo.descripcion;
+                    return PartialView("_ModalTipo", data);
+                }
+            }
+            
+        }
+        [HttpPost]
+        public ActionResult ModalFalla(int _id_falla, int _id_tipo)
+        {
+            VM_Fallas data = new VM_Fallas();
+
+            using (var context = new IMSSEntities())
+            {
+                data.Tipos = context.tipos_falla.Select(x => new SelectListItem
+                {
+                    Value = x.Id_tipo_falla.ToString(),
+                    Text = x.descripcion,
+                }).ToList();
+                data.Ddl_tipo = _id_tipo.ToString();
+
+                if (_id_falla == 0)
+                {
+                    return PartialView("_ModalFallas", data);
+                }
+                var falla = context.fallas.Find(_id_falla);
+
+                data.Id = falla.Id_falla;
+                data.Ddl_tipo = falla.Id_tipo_falla.ToString();
+                data.Descripcion = falla.descripcion;
+                return PartialView("_ModalFallas", data);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult RegistrarEditarTipo(VM_TipoFallas _tipo)
+        {
+            try
+            {
+                using (var context = new IMSSEntities())
+                {
+                    if (_tipo.Id_tipo > 0)
+                    {
+                        var tipo = context.tipos_falla.Find(_tipo.Id_tipo);
+                        tipo.descripcion = _tipo.Tipo_falla;
+
+                    }
+                    else
+                    {
+                        tipos_falla nuevoTipo = new tipos_falla
+                        {
+                            descripcion = _tipo.Tipo_falla,
+                        };
+                        context.tipos_falla.Add(nuevoTipo);
+
+                    }
+                    context.SaveChanges();
+                    _tipo.Mensaje = "okay";
+                    return PartialView("_ModalTipo", _tipo);
+                }
+            }
+            catch (Exception)
+            {
+                _tipo.Mensaje = "error";
+                return PartialView("_ModalTipo", _tipo);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult RegistrarEditarFalla(VM_Fallas _falla)
+        {
+            try
+            {
+                using (var context = new IMSSEntities())
+                {
+                    if (_falla.Id > 0)
+                    {
+                        var falla = context.fallas.Find(_falla.Id);
+                        falla.descripcion = _falla.Descripcion;
+                        falla.Id_tipo_falla = Convert.ToInt32(_falla.Ddl_tipo);
+                    }
+                    else
+                    {
+                        fallas nuevaFalla = new fallas
+                        {
+                            descripcion = _falla.Descripcion,
+                            Id_tipo_falla = Convert.ToInt32(_falla.Ddl_tipo),
+                    };
+                        context.fallas.Add(nuevaFalla);
+
+                    }
+                    context.SaveChanges();
+                    _falla.Mensaje = "okay";
+                    return PartialView("_ModalFallas", _falla);
+                }
+            }
+            catch (Exception)
+            {
+                _falla.Mensaje = "error";
+                return PartialView("_ModalFallas", _falla);
+            }
+        }
+
         private VM_Reportes ObtenerReporte(int _id_reporte)
         {
             using (var context = new IMSSEntities())
@@ -205,20 +403,21 @@ namespace Sistema_Fallas_IMSS.Controllers
             }
         }
 
-        public ActionResult IndexGrid(string _usuario)
+        public ActionResult IndexGrid(string _estatus, string _search)
         {
+            _search = string.IsNullOrEmpty(_search) ? "%%" : "%" + _search + "%";
+            _estatus = _estatus == "0" ? "%%" : _estatus;
             VM_Index data = new VM_Index
             {
-                Reportes = ObtenerReportes(_usuario),
+                Reportes = ObtenerReportes(_estatus, _search),
             };
             return PartialView("_IndexGrid",data);
         }
 
-        private List<VM_Reportes> ObtenerReportes(string _usuario)
+        private List<VM_Reportes> ObtenerReportes(string _estatus, string _search)
         {
             using (var context = new IMSSEntities())
             {
-                var usuario = context.usuarios.Where(us => us.cuenta == _usuario).FirstOrDefault();
 
                 var sqlString = $@"SELECT * FROM (
                                     SELECT
@@ -259,6 +458,15 @@ namespace Sistema_Fallas_IMSS.Controllers
 									LEFT JOIN fallas ON rfallas.id_falla = fallas.Id_falla
 									LEFT JOIN tipos_falla tipo ON fallas.Id_tipo_falla = tipo.Id_tipo_falla
                                   ) AS consulta
+                                    WHERE 
+                                    consulta.estatus LIKE '{_estatus}'
+                                    AND(
+                                    consulta.descripcion LIKE '{_search}'
+                                    OR consulta.falla LIKE '{_search}'
+                                    OR consulta.tipo LIKE '{_search}'
+                                    OR consulta.nombre_area LIKE '{_search}'
+                                    OR consulta.usuario LIKE '{_search}'
+                                    )
                                   ORDER BY consulta.Id_reporte DESC";
 
                 return context.Database.SqlQuery<VM_Reportes>(sqlString).ToList();

@@ -51,6 +51,7 @@ namespace Sistema_Fallas_IMSS.Controllers
                 {
                     var usuario = (from usuarios in context.usuarios
                                    join roles in context.roles on usuarios.id_rol equals roles.Id_rol
+                                   where usuarios.Id == _id_usuario
                                    select new VM_ListUsuarios
                                    {
                                        Id = usuarios.Id,
@@ -68,6 +69,66 @@ namespace Sistema_Fallas_IMSS.Controllers
                 data.Rol = "";
                 return PartialView("_ModalUsuario", data);
             }
+        }
+
+        [HttpPost]
+        public ActionResult RegistrarEditarUsuario(VM_ListUsuarios _usuario)
+        {
+            try
+            {
+                using (var context = new IMSSEntities())
+                {
+                    _usuario.Roles = (from roles in context.roles
+                                      select new SelectListItem
+                                      {
+                                          Value = roles.Id_rol.ToString(),
+                                          Text = roles.nombre,
+                                      }).ToList();
+                    if (!ModelState.IsValid)
+                    {
+                        _usuario.Mensaje = "validar";
+                        return PartialView("_ModalUsuario", _usuario);
+                    }
+                    if (_usuario.Id > 0)
+                    {
+                        var usuario = context.usuarios.Find(_usuario.Id);
+                        usuario.nombre = _usuario.Nombre;
+                        usuario.cuenta = _usuario.Cuenta;
+                        usuario.pass = string.IsNullOrEmpty(_usuario.Password) ? usuario.pass : Encriptar(_usuario.Password);
+                        usuario.id_rol = Convert.ToInt32(_usuario.Rol);
+                    }
+                    else
+                    {
+                        usuarios usuario = new usuarios
+                        {
+                            nombre = _usuario.Nombre,
+                            cuenta = _usuario.Cuenta,
+                            pass = Encriptar(_usuario.Password),
+                            id_rol = Convert.ToInt32(_usuario.Rol),
+                        };
+                        context.usuarios.Add(usuario);
+                    }
+                    context.SaveChanges();
+                    _usuario.Mensaje = "okay";
+                    return PartialView("_ModalUsuario", _usuario);
+                }
+            }
+            catch (Exception)
+            {
+                _usuario.Mensaje = "error";
+                return PartialView("_ModalUsuario", _usuario);
+                throw;
+            }
+
+
+        }
+
+        public string Encriptar(string _password)
+        {
+            string result = string.Empty;
+            byte[] data = System.Text.Encoding.Unicode.GetBytes(_password);
+            result = Convert.ToBase64String(data);
+            return result;
         }
     }
 }
