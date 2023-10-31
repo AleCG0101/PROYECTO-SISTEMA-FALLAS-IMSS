@@ -10,6 +10,7 @@
         columns.Add(model => model.Municipio).Titled("Municipio");
         columns.Add(model => model.Direccion).Titled("Direccion");
         columns.Add(model => model.Id).Titled("Editar").Encoded(false).Css("text-center").RenderedAs(model => $"<a href='#' onclick='AbrirModalHospital({model.Id})' data-placement='left'><span style='text-align:center'><i class='fa-solid fa-pen-to-square btn btn-info'></i></span></a>");
+        columns.Add(model => model.Id).Titled("Eliminar").Encoded(false).Css("text-center").RenderedAs(model => $"<a href='#' onclick='EliminarHospital({model.Id})' data-placement='left' class='btn btn-danger'><span style='text-align:center'><i class='fa-solid fa-circle-xmark'></i></span></a>");
     })
 .Empty("Sin registros encontrados")
 .Named("gridHospitales")

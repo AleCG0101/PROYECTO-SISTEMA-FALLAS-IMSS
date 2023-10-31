@@ -371,5 +371,82 @@ namespace Sistema_Fallas_IMSS.Controllers
             }
         }
 
+        [HttpPost]
+        public int EliminarMaterial(int _id_material)
+        {
+            try
+            {
+                using (var context = new IMSSEntities())
+                {
+                    var existencias = context.existencias.Where(e => e.id_material == _id_material).ToList();
+                    if (existencias.Count > 0)
+                    {
+                        return 2;
+                    }
+                    else
+                    {
+                        var material = context.materiales.Find(_id_material);
+                        context.materiales.Remove(material);
+                        context.SaveChanges();
+                        return 1;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return 0;
+                throw;
+            }
+        }
+
+        [HttpPost]
+        public int EliminarExistencia(int _id_existencia)
+        {
+            try
+            {
+                using (var context = new IMSSEntities())
+                {
+                    var existencia = context.existencias.Find(_id_existencia);
+                    context.existencias.Remove(existencia);
+                    context.SaveChanges();
+                    return 1;
+                }
+            }
+            catch (Exception)
+            {
+                return 0;
+                throw;
+            }
+        }
+
+        [HttpPost]
+        public int EliminarTipoHardware(int _id_tipo)
+        {
+            try
+            {
+                using (var context = new IMSSEntities())
+                {
+                    var materiales = context.materiales.Where(m => m.id_tipo_hardware == _id_tipo).ToList();
+                    if (materiales.Count > 0)
+                    {
+                        return 2;
+                    }
+                    else
+                    {
+                        var tipo = context.tipo_hardware.Find(_id_tipo);
+                        context.tipo_hardware.Remove(tipo);
+                        context.SaveChanges();
+                        return 1;
+                    }
+
+                }
+            }
+            catch (Exception)
+            {
+                return 0;
+                throw;
+            }
+        }
+
     }
 }

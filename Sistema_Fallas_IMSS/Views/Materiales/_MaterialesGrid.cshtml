@@ -13,6 +13,7 @@
         columns.Add(model => model.Estado).Titled("Estado");
         columns.Add(model => model.Comentarios).Titled("Comentarios");
         columns.Add(model => model.Id_material).Titled("Editar").Encoded(false).Css("text-center").RenderedAs(model => $"<a href='#' onclick='AbrirModalMaterial({model.Id_material})' data-placement='left'><span style='text-align:center'><i class='fa-solid fa-pen-to-square btn btn-info'></i></span></a>");
+        columns.Add(model => model.Id_material).Titled("Eliminar").Encoded(false).Css("text-center").RenderedAs(model => $"<a href='#' onclick='EliminarMaterial({model.Id_material})' data-placement='left' class='btn btn-danger'><span style='text-align:center'><i class='fa-solid fa-circle-xmark'></i></span></a>");
     })
 .Empty("Sin registros encontrados")
 .Named("gridMateriales")

@@ -17,8 +17,9 @@ namespace Sistema_Fallas_IMSS.ViewModels
         public int Id { get; set; }
         [Required(ErrorMessage = "Introduce un nombre")]
         public string Nombre_area { get; set; }
-        public int Id_hospital { get; set; }
         [Required(ErrorMessage = "Selecciona un hospital")]
+        public int Id_hospital { get; set; }
+        
         public string Hospital { get; set; }
         public List<SelectListItem> Hospitales { get; set; } = new List<SelectListItem>();
         public string Mensaje { get; set; }
