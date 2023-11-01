@@ -150,6 +150,12 @@ ALTER TABLE reporte_fallas
 ADD FOREIGN KEY(id_reporte) REFERENCES reporte(Id_reporte)
 ----------------------------------------------------------------------------------
 
+ALTER TABLE reporte
+ADD atendio VARCHAR(150) DEFAULT NULL
+
+ALTER TABLE reporte
+ADD solucion VARCHAR(300) DEFAULT NULL
+
 --INSERTAR
 
  INSERT INTO hospitales_imss(nombre,director,direccion,municipio,estado) VALUES('IMSS H.G.Z No.46','DR.','Blvd. Agustin Castro','Gomez Palacio','Durango')

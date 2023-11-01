@@ -46,7 +46,7 @@
     <Property Name="solucion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="autor" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="titulo" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="titulo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="hospitales_imss">
     <Key>
@@ -105,6 +105,8 @@
     <Property Name="fecha_concluido" Type="DateTime" Precision="3" />
     <Property Name="contacto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="reporte_fallas" Relationship="Self.FK__reporte_f__id_re__6B24EA82" FromRole="reporte" ToRole="reporte_fallas" />
+    <Property Name="atendio" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="solucion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="reporte_fallas">
     <Key>

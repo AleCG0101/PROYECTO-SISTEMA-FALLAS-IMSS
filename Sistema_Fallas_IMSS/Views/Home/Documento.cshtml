@@ -52,12 +52,15 @@
             </div>
             <div class="col">
                 <h2>FALLA: @Model.Falla</h2>
-            </div>          
+            </div>
         </div>
         <br />
         <div class="pageitem">
             <div class="col">
                 <h2>ESTATUS DEL REPORTE: @Model.Estado</h2>
+            </div>
+            <div class="col">
+                <h2>PERSONA QUE ATENDIO: @Model.Atendio</h2>
             </div>
         </div>
         <br />
@@ -67,6 +70,14 @@
         <br />
         <div>
             <h2>@Model.Descripcion</h2>
+        </div>
+        <br />
+        <div style="text-align:center;">
+            <h2>SOLUCION DEL REPORTE:</h2>
+        </div>
+        <br />
+        <div>
+            <h2>@Model.Solucion</h2>
         </div>
         <br />
         <h2>CONTACTO: @Model.Contacto</h2>

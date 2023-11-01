@@ -94,6 +94,8 @@
     <EntitySetMapping Name="reporte">
       <EntityTypeMapping TypeName="SISTEMA_FALLAS_IMSSModel.reporte">
         <MappingFragment StoreEntitySet="reporte">
+          <ScalarProperty Name="solucion" ColumnName="solucion" />
+          <ScalarProperty Name="atendio" ColumnName="atendio" />
           <ScalarProperty Name="Id_reporte" ColumnName="Id_reporte" />
           <ScalarProperty Name="ip_usuario" ColumnName="ip_usuario" />
           <ScalarProperty Name="descripcion" ColumnName="descripcion" />

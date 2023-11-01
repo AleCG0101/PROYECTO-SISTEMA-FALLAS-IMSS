@@ -11,7 +11,9 @@
         columns.Add(model => model.Estatus).Titled("Estatus").Encoded(false).RenderedAs(model => model.Estatus == 1 ? "En proceso" : model.Estatus == 2 ? "Atendido" : "Cancelado");
         columns.Add(model => model.Fecha_registro).Titled("Fecha Registro").Formatted("{0:d}");
         columns.Add(model => model.Fecha_concluido).Titled("Fecha Concluido").Formatted("{0:d}");
-        columns.Add(model => model.Id_reporte).Titled("Finalizar").Encoded(false).Css("text-center").RenderedAs(model => model.Estatus > 1 ? "" : $"<a href='#' onclick='FinalizarReporte({model.Id_reporte})' class='btn btn-success'><span style='text-align:center'><i class='fa-solid fa-thumbs-up' style='color: #ffffff;'></i></span></a>");
+        columns.Add(model => model.Atendio).Titled("Atendido por");
+        columns.Add(model => model.Solucion).Titled("Solucion");
+        columns.Add(model => model.Id_reporte).Titled("Finalizar").Encoded(false).Css("text-center").RenderedAs(model => model.Estatus > 1 ? "" : $"<a href='#' onclick='AbrirModalFinalizarReporte({model.Id_reporte})' class='btn btn-success'><span style='text-align:center'><i class='fa-solid fa-thumbs-up' style='color: #ffffff;'></i></span></a>");
         columns.Add(model => model.Id_reporte).Titled("Cancelar").Encoded(false).Css("text-center").RenderedAs(model => model.Estatus > 1 ? "" : Model.Rol <= 2 ? $"<a href='#' onclick='CancelarReporte({model.Id_reporte})' class='btn btn-danger'><span style='text-align:center'><i class='fa-solid fa-ban' style='color: #ffffff;'></i></span></a>" : "");
         columns.Add(model => model.Id_reporte).Titled("Imprimir").Encoded(false).Css("text-center").RenderedAs(model => $"<a href='{Href($"~/Home/Imprimir?_id_reporte={model.Id_reporte}")}' target='_blank' class='btn btn-outline-danger' onclick=''><span style='text-align:center'><i class='fa-solid fa-file-pdf'></i></span></a>");
     })

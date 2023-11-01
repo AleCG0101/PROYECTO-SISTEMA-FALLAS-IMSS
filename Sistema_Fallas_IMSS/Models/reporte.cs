@@ -27,6 +27,8 @@ namespace Sistema_Fallas_IMSS.Models
         public System.DateTime fecha_registro { get; set; }
         public Nullable<System.DateTime> fecha_concluido { get; set; }
         public string contacto { get; set; }
+        public string atendio { get; set; }
+        public string solucion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<reporte_fallas> reporte_fallas { get; set; }
