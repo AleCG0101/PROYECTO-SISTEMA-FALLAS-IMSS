@@ -406,27 +406,15 @@
                     success: function (response) {
 
                         if (response == 1) {
-                            Swal.fire(
-                                'Cambios hechos!',
-                                'Se ha eliminado el area!',
-                                'success'
-                            )
+                            Swal.fire('Cambios hechos!', 'Se ha eliminado el area!', 'success')
                             var grid = new MvcGrid(document.querySelector("#gridAreas"))
                             grid.reload();
                         }
                         if (response == 2) {
-                            Swal.fire(
-                                'ERROR!',
-                                'Existen personas registradas en el area!',
-                                'info'
-                            )
+                            Swal.fire('ERROR!', 'Existen personas registradas en el area!', 'info')
                         }
                         if (response == 0) {
-                            Swal.fire(
-                                'Algo ocurrio!',
-                                'Error al eliminar!',
-                                'info'
-                            )
+                            Swal.fire('Algo ocurrio!', 'Error al eliminar!', 'info')
                         }
 
                     },

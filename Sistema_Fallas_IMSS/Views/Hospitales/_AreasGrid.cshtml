@@ -6,8 +6,8 @@
         columns.Add(model => model.Id).Hidden();
         columns.Add(model => model.Nombre_area).Titled("Area");
         columns.Add(model => model.Hospital).Titled("Hospital");
-        columns.Add(model => model.Id).Titled("Editar").Encoded(false).Css("text-center").RenderedAs(model => $"<a href='#' onclick='AbrirModalArea({model.Id})' data-placement='left'><span style='text-align:center'><i class='fa-solid fa-pen-to-square btn btn-info'></i></span></a>");
-        columns.Add(model => model.Id).Titled("Eliminar").Encoded(false).Css("text-center").RenderedAs(model => $"<a href='#' onclick='EliminarArea({model.Id})' data-placement='left' class='btn btn-danger'><span style='text-align:center'><i class='fa-solid fa-circle-xmark'></i></span></a>");
+        columns.Add(model => model.Id).Titled("Editar").Encoded(false).Css("text-center").RenderedAs(model => $"<a href='#' onclick='AbrirModalArea({model.Id})' data-placement='left'class='btn btn-info'><span style='text-align:center'><i class='fa-solid fa-pen-to-square'style='color: #ffffff;'></i></span></a>");
+        columns.Add(model => model.Id).Titled("Eliminar").Encoded(false).Css("text-center").RenderedAs(model => $"<a href='#' onclick='EliminarArea({model.Id})' data-placement='left' class='btn btn-danger'><span style='text-align:center'><i class='fa-solid fa-trash' style='color: #ffffff;'></i></span></a>");
     })
 .Empty("Sin registros encontrados")
 .Named("gridAreas")

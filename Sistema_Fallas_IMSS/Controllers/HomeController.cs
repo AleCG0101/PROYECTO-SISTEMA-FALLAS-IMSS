@@ -410,6 +410,7 @@ namespace Sistema_Fallas_IMSS.Controllers
             VM_Index data = new VM_Index
             {
                 Reportes = ObtenerReportes(_estatus, _search),
+                Rol = ObtenerRol(User.Identity.Name),
             };
             return PartialView("_IndexGrid",data);
         }
