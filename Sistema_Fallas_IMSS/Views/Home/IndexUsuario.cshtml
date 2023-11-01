@@ -118,12 +118,15 @@
 
     function GenerarReporte() {
         var formData = new FormData();
+
         formData.append("Usuario", $("#Direccion_ip").val());
         formData.append("Descripcion", $("#Reporte_Descripcion").val());
         formData.append("Contacto", $("#Reporte_Contacto").val());
         formData.append("Falla", $("#ddl_fallas").val());
         formData.append("Otra_falla", $("#Reporte_Otra_falla").val());
         formData.append("Tipo", $("#ddl_tipo").val());
+
+        
 
         $.ajax({
             type: "POST",
