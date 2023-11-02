@@ -127,5 +127,25 @@ namespace Sistema_Fallas_IMSS.Controllers
             }
             
         }
+
+        [HttpPost]
+        public int EliminarForo(int _id_foro)
+        {
+            try
+            {
+                using (var context = new IMSSEntities())
+                {
+                    var foro = context.foro_soluciones.Find(_id_foro);
+                    context.foro_soluciones.Remove(foro);
+                    context.SaveChanges();
+                    return 1;
+                }
+            }
+            catch (Exception)
+            {
+                return 0;
+                throw;
+            }
+        }
     }
 }

@@ -122,6 +122,25 @@ namespace Sistema_Fallas_IMSS.Controllers
                 throw;
             }
         }
+        [HttpPost]
+        public int EliminarUsuario(int _id_usuario)
+        {
+            try
+            {
+                using (var context = new IMSSEntities())
+                {
+                    var usuario = context.usuarios.Find(_id_usuario);
+                    context.usuarios.Remove(usuario);
+                    context.SaveChanges();
+                    return 1;
+                }
+            }
+            catch (Exception)
+            {
+                return 0;
+                throw;
+            }
+        }
 
         public string Encriptar(string _password)
         {
