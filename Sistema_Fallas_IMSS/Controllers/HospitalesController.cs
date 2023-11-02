@@ -122,6 +122,61 @@ namespace Sistema_Fallas_IMSS.Controllers
         }
 
         [HttpPost]
+        public int EliminarHospital(int _id_hospital)
+        {
+            try
+            {
+                using (var context = new IMSSEntities())
+                {
+                    var areas = context.areas_imss.Where(a => a.id_hospital == _id_hospital).ToList();
+                    if (areas.Count > 0)
+                    {
+                        return 2;
+                    }
+                    else
+                    {
+                        var hospital = context.hospitales_imss.Find(_id_hospital);
+                        context.hospitales_imss.Remove(hospital);
+                        context.SaveChanges();
+                        return 1;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return 0;
+                throw;
+            }
+        }
+        [HttpPost]
+        public int EliminarArea(int _id_area)
+        {
+            try
+            {
+                using (var context = new IMSSEntities())
+                {
+                    var existencias = context.existencias.Where(e => e.id_area == _id_area).ToList();
+                    if (existencias.Count > 0)
+                    {
+                        return 2;
+                    }
+                    else
+                    {
+                        var area = context.areas_imss.Find(_id_area);
+                        context.areas_imss.Remove(area);
+                        context.SaveChanges();
+                        return 1;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return 0;
+                throw;
+            }
+        }
+
+        [HttpPost]
         public PartialViewResult RegistrarEditarHospital(VM_Hospitales _hospital)
         {
             if (!ModelState.IsValid)

@@ -155,7 +155,7 @@ namespace Sistema_Fallas_IMSS.Controllers
             }
         }
         [HttpPost]
-        public int FinalizarReporte(int _id_reporte)
+        public int FinalizarReporte(int _id_reporte, string _solucion)
         {
             try
             {
@@ -164,6 +164,8 @@ namespace Sistema_Fallas_IMSS.Controllers
                     var reporte = context.reporte.Find(_id_reporte);
                     reporte.estatus = 2;
                     reporte.fecha_concluido = DateTime.Now;
+                    reporte.solucion = _solucion;
+                    reporte.atendio = User.Identity.Name;
                     context.SaveChanges();
                     return 1;
                 }
@@ -353,6 +355,7 @@ namespace Sistema_Fallas_IMSS.Controllers
             }
         }
 
+        //Se usa para imprimir
         private VM_Reportes ObtenerReporte(int _id_reporte)
         {
             using (var context = new IMSSEntities())
@@ -367,6 +370,8 @@ namespace Sistema_Fallas_IMSS.Controllers
                                         reporte.fecha_registro,
                                         reporte.fecha_concluido,
                                         reporte.contacto,
+                                        reporte.atendio,
+                                        reporte.solucion,
                                         fallas.descripcion falla,
                                         tipo.descripcion tipo,
                                         area.nombre_area
@@ -386,6 +391,8 @@ namespace Sistema_Fallas_IMSS.Controllers
                                         reporte.fecha_registro,
                                         reporte.fecha_concluido,
                                         reporte.contacto,
+                                        reporte.atendio,
+                                        reporte.solucion,
                                         COALESCE(fallas.descripcion, rfallas.falla) AS falla,
 										COALESCE(tipo.descripcion, 'Otro') AS tipo,
                                         COALESCE(area.nombre_area, 'Sin registrar') AS usuario
@@ -410,6 +417,7 @@ namespace Sistema_Fallas_IMSS.Controllers
             VM_Index data = new VM_Index
             {
                 Reportes = ObtenerReportes(_estatus, _search),
+                Rol = ObtenerRol(User.Identity.Name),
             };
             return PartialView("_IndexGrid",data);
         }
@@ -428,6 +436,8 @@ namespace Sistema_Fallas_IMSS.Controllers
                                         reporte.fecha_registro,
                                         reporte.fecha_concluido,
                                         reporte.contacto,
+                                        reporte.atendio,
+                                        reporte.solucion,
                                         fallas.descripcion falla,
                                         tipo.descripcion tipo,
                                         area.nombre_area
@@ -447,6 +457,8 @@ namespace Sistema_Fallas_IMSS.Controllers
                                         reporte.fecha_registro,
                                         reporte.fecha_concluido,
                                         reporte.contacto,
+                                        reporte.atendio,
+                                        reporte.solucion,
                                         COALESCE(fallas.descripcion, rfallas.falla) AS falla,
 										COALESCE(tipo.descripcion, 'Otro') AS tipo,
                                         COALESCE(area.nombre_area, 'Sin registrar') AS usuario

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sistema_Fallas_IMSS.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace Sistema_Fallas_IMSS.ViewModels
         public string Estatus { get; set; }
         public VM_Reportes Reporte { get; set; }
         public List<VM_Reportes> Reportes { get; set; } = new List<VM_Reportes>();
-
+       public int Rol { get; set; }
     }
 
     public class VM_Reportes
@@ -37,6 +38,8 @@ namespace Sistema_Fallas_IMSS.ViewModels
         public string Otra_falla { get; set; }
         public string Tipo { get; set; }
         public string Estado { get; set; }
+        public string Atendio { get; set; }
+        public string Solucion { get; set; }
     }
     public class VM_TipoFallas
     {

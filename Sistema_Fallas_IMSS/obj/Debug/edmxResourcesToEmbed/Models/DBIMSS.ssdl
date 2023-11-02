@@ -37,11 +37,11 @@
       <PropertyRef Name="Id_solucion" />
     </Key>
     <Property Name="Id_solucion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="titulo" Type="varchar" MaxLength="250" />
     <Property Name="problema" Type="varchar(max)" />
     <Property Name="solucion" Type="varchar(max)" />
     <Property Name="autor" Type="varchar" MaxLength="100" />
     <Property Name="correo" Type="varchar" MaxLength="100" />
-    <Property Name="titulo" Type="varchar" MaxLength="250" Nullable="false" />
   </EntityType>
   <EntityType Name="hospitales_imss">
     <Key>
@@ -93,6 +93,8 @@
     <Property Name="fecha_registro" Type="datetime" Nullable="false" />
     <Property Name="fecha_concluido" Type="datetime" />
     <Property Name="contacto" Type="varchar" MaxLength="50" />
+    <Property Name="atendio" Type="varchar" MaxLength="150" />
+    <Property Name="solucion" Type="varchar" MaxLength="300" />
   </EntityType>
   <EntityType Name="reporte_fallas">
     <Key>
@@ -143,7 +145,7 @@
     <Property Name="pass" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="id_rol" Type="int" Nullable="false" />
   </EntityType>
-  <Association Name="FK__areas_ims__id_ho__628FA481">
+  <Association Name="FK__areas_ims__id_ho__6477ECF3">
     <End Role="hospitales_imss" Type="Self.hospitales_imss" Multiplicity="1" />
     <End Role="areas_imss" Type="Self.areas_imss" Multiplicity="*" />
     <ReferentialConstraint>
@@ -155,7 +157,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__existenci__id_ar__693CA210">
+  <Association Name="FK__existenci__id_ar__6B24EA82">
     <End Role="areas_imss" Type="Self.areas_imss" Multiplicity="1" />
     <End Role="existencias" Type="Self.existencias" Multiplicity="*" />
     <ReferentialConstraint>
@@ -167,7 +169,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__existenci__id_ma__68487DD7">
+  <Association Name="FK__existenci__id_ma__6A30C649">
     <End Role="materiales" Type="Self.materiales" Multiplicity="1" />
     <End Role="existencias" Type="Self.existencias" Multiplicity="*" />
     <ReferentialConstraint>
@@ -179,7 +181,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__fallas__Id_tipo___6A30C649">
+  <Association Name="FK__fallas__Id_tipo___6C190EBB">
     <End Role="tipos_falla" Type="Self.tipos_falla" Multiplicity="0..1" />
     <End Role="fallas" Type="Self.fallas" Multiplicity="*" />
     <ReferentialConstraint>
@@ -191,7 +193,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__materiale__id_es__6754599E">
+  <Association Name="FK__materiale__id_es__693CA210">
     <End Role="material_estados" Type="Self.material_estados" Multiplicity="1" />
     <End Role="materiales" Type="Self.materiales" Multiplicity="*" />
     <ReferentialConstraint>
@@ -203,7 +205,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__materiale__id_ti__66603565">
+  <Association Name="FK__materiale__id_ti__68487DD7">
     <End Role="tipo_hardware" Type="Self.tipo_hardware" Multiplicity="1" />
     <End Role="materiales" Type="Self.materiales" Multiplicity="*" />
     <ReferentialConstraint>
@@ -215,7 +217,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__reporte_f__id_re__6B24EA82">
+  <Association Name="FK__reporte_f__id_re__6D0D32F4">
     <End Role="reporte" Type="Self.reporte" Multiplicity="1" />
     <End Role="reporte_fallas" Type="Self.reporte_fallas" Multiplicity="*" />
     <ReferentialConstraint>
@@ -227,7 +229,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__rol_opera__id_op__656C112C">
+  <Association Name="FK__rol_opera__id_op__6754599E">
     <End Role="operacion" Type="Self.operacion" Multiplicity="1" />
     <End Role="rol_operacion" Type="Self.rol_operacion" Multiplicity="*" />
     <ReferentialConstraint>
@@ -239,7 +241,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__rol_opera__Id_ro__6477ECF3">
+  <Association Name="FK__rol_opera__Id_ro__66603565">
     <End Role="roles" Type="Self.roles" Multiplicity="1" />
     <End Role="rol_operacion" Type="Self.rol_operacion" Multiplicity="*" />
     <ReferentialConstraint>
@@ -251,7 +253,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__usuarios__id_rol__6383C8BA">
+  <Association Name="FK__usuarios__id_rol__656C112C">
     <End Role="roles" Type="Self.roles" Multiplicity="1" />
     <End Role="usuarios" Type="Self.usuarios" Multiplicity="*" />
     <ReferentialConstraint>
@@ -279,43 +281,43 @@
     <EntitySet Name="tipo_hardware" EntityType="Self.tipo_hardware" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tipos_falla" EntityType="Self.tipos_falla" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="usuarios" EntityType="Self.usuarios" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__areas_ims__id_ho__628FA481" Association="Self.FK__areas_ims__id_ho__628FA481">
+    <AssociationSet Name="FK__areas_ims__id_ho__6477ECF3" Association="Self.FK__areas_ims__id_ho__6477ECF3">
       <End Role="hospitales_imss" EntitySet="hospitales_imss" />
       <End Role="areas_imss" EntitySet="areas_imss" />
     </AssociationSet>
-    <AssociationSet Name="FK__existenci__id_ar__693CA210" Association="Self.FK__existenci__id_ar__693CA210">
+    <AssociationSet Name="FK__existenci__id_ar__6B24EA82" Association="Self.FK__existenci__id_ar__6B24EA82">
       <End Role="areas_imss" EntitySet="areas_imss" />
       <End Role="existencias" EntitySet="existencias" />
     </AssociationSet>
-    <AssociationSet Name="FK__existenci__id_ma__68487DD7" Association="Self.FK__existenci__id_ma__68487DD7">
+    <AssociationSet Name="FK__existenci__id_ma__6A30C649" Association="Self.FK__existenci__id_ma__6A30C649">
       <End Role="materiales" EntitySet="materiales" />
       <End Role="existencias" EntitySet="existencias" />
     </AssociationSet>
-    <AssociationSet Name="FK__fallas__Id_tipo___6A30C649" Association="Self.FK__fallas__Id_tipo___6A30C649">
+    <AssociationSet Name="FK__fallas__Id_tipo___6C190EBB" Association="Self.FK__fallas__Id_tipo___6C190EBB">
       <End Role="tipos_falla" EntitySet="tipos_falla" />
       <End Role="fallas" EntitySet="fallas" />
     </AssociationSet>
-    <AssociationSet Name="FK__materiale__id_es__6754599E" Association="Self.FK__materiale__id_es__6754599E">
+    <AssociationSet Name="FK__materiale__id_es__693CA210" Association="Self.FK__materiale__id_es__693CA210">
       <End Role="material_estados" EntitySet="material_estados" />
       <End Role="materiales" EntitySet="materiales" />
     </AssociationSet>
-    <AssociationSet Name="FK__materiale__id_ti__66603565" Association="Self.FK__materiale__id_ti__66603565">
+    <AssociationSet Name="FK__materiale__id_ti__68487DD7" Association="Self.FK__materiale__id_ti__68487DD7">
       <End Role="tipo_hardware" EntitySet="tipo_hardware" />
       <End Role="materiales" EntitySet="materiales" />
     </AssociationSet>
-    <AssociationSet Name="FK__reporte_f__id_re__6B24EA82" Association="Self.FK__reporte_f__id_re__6B24EA82">
+    <AssociationSet Name="FK__reporte_f__id_re__6D0D32F4" Association="Self.FK__reporte_f__id_re__6D0D32F4">
       <End Role="reporte" EntitySet="reporte" />
       <End Role="reporte_fallas" EntitySet="reporte_fallas" />
     </AssociationSet>
-    <AssociationSet Name="FK__rol_opera__id_op__656C112C" Association="Self.FK__rol_opera__id_op__656C112C">
+    <AssociationSet Name="FK__rol_opera__id_op__6754599E" Association="Self.FK__rol_opera__id_op__6754599E">
       <End Role="operacion" EntitySet="operacion" />
       <End Role="rol_operacion" EntitySet="rol_operacion" />
     </AssociationSet>
-    <AssociationSet Name="FK__rol_opera__Id_ro__6477ECF3" Association="Self.FK__rol_opera__Id_ro__6477ECF3">
+    <AssociationSet Name="FK__rol_opera__Id_ro__66603565" Association="Self.FK__rol_opera__Id_ro__66603565">
       <End Role="roles" EntitySet="roles" />
       <End Role="rol_operacion" EntitySet="rol_operacion" />
     </AssociationSet>
-    <AssociationSet Name="FK__usuarios__id_rol__6383C8BA" Association="Self.FK__usuarios__id_rol__6383C8BA">
+    <AssociationSet Name="FK__usuarios__id_rol__656C112C" Association="Self.FK__usuarios__id_rol__656C112C">
       <End Role="roles" EntitySet="roles" />
       <End Role="usuarios" EntitySet="usuarios" />
     </AssociationSet>

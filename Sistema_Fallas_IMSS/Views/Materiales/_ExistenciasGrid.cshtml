@@ -13,7 +13,8 @@
         columns.Add(model => model.Nsm).Titled("Nsm");
         columns.Add(model => model.Nnn).Titled("Nnn");
         columns.Add(model => model.Serial).Titled("Centro de costos");
-        columns.Add(model => model.Id_existencia).Titled("Editar").Encoded(false).Css("text-center").RenderedAs(model => $"<a href='#' onclick='AbrirModalExistencia({model.Id_existencia})' data-placement='left'><span style='text-align:center'><i class='fa-solid fa-pen-to-square btn btn-info'></i></span></a>");
+        columns.Add(model => model.Id_existencia).Titled("Editar").Encoded(false).Css("text-center").RenderedAs(model => $"<a href='#' onclick='AbrirModalExistencia({model.Id_existencia})' data-placement='left' class='btn btn-info'><span style='text-align:center'><i class='fa-solid fa-pen-to-square'style='color: #ffffff;'></i></span></a>");
+        columns.Add(model => model.Id_existencia).Titled("Eliminar").Encoded(false).Css("text-center").RenderedAs(model => $"<a href='#' onclick='EliminarExistencia({model.Id_existencia})' data-placement='left' class='btn btn-danger'><span style='text-align:center'><i class='fa-solid fa-trash' style='color: #ffffff;'></i></span></a>");
     })
 .Empty("Sin registros encontrados")
 .Named("gridExistencias")

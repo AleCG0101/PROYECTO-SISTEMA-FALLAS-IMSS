@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.DynamicData;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 
@@ -24,6 +25,7 @@ namespace Sistema_Fallas_IMSS.Controllers
             {
                 List<VM_ListUsuarios> data = (from usuario in context.usuarios
                                          join roles in context.roles on usuario.id_rol equals roles.Id_rol
+                                         where usuario.id_rol > (User.Identity.Name == "Master" ? 0 : 1)
                                          select new VM_ListUsuarios
                                          {
                                              Id = usuario.Id,
@@ -119,15 +121,12 @@ namespace Sistema_Fallas_IMSS.Controllers
                 return PartialView("_ModalUsuario", _usuario);
                 throw;
             }
-
-
         }
 
         public string Encriptar(string _password)
         {
-            string result = string.Empty;
             byte[] data = System.Text.Encoding.Unicode.GetBytes(_password);
-            result = Convert.ToBase64String(data);
+            string result = Convert.ToBase64String(data);
             return result;
         }
     }
