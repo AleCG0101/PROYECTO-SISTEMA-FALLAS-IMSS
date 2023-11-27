@@ -364,6 +364,7 @@
     <Compile Include="ViewModels\VM_Usuario.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".gitignore" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -2589,6 +2590,7 @@
     <Content Include="Views\Home\_ModalTipoFallas.cshtml" />
     <Content Include="Views\Home\_ModalTipo.cshtml" />
     <Content Include="Views\Home\_ModalFallas.cshtml" />
+    <Content Include="Views\Home\Anuncios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

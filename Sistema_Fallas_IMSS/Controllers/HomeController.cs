@@ -484,5 +484,10 @@ namespace Sistema_Fallas_IMSS.Controllers
                 return context.Database.SqlQuery<VM_Reportes>(sqlString).ToList();
             }
         }
+
+        public ActionResult Anuncios()
+        { 
+            return View(); 
+        }
     }
 }
